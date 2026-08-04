@@ -614,7 +614,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       <a href="#demo">Demonstração</a>
       <a href="#depoimentos">Depoimentos</a>
     </nav>
-    <a href="mailto:contato@lexcontrol.com.br?subject=Agendar%20demonstra%C3%A7%C3%A3o%20LexControl" class="btn btn-primary btn-cta-top">Agendar demonstração</a>
+    <a href="mailto:contato@lexcontrol.com.br?subject=Agendar%20demonstra%C3%A7%C3%A3o%20LexControl" data-typebot-open class="btn btn-primary btn-cta-top">Agendar demonstração</a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menu"><span></span></button>
     <nav class="mobile-menu" id="mobileMenu">
       <a href="#produto">Produto</a>
@@ -622,7 +622,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       <a href="#resultados">Resultados</a>
       <a href="#demo">Demonstração</a>
       <a href="#depoimentos">Depoimentos</a>
-      <a href="mailto:contato@lexcontrol.com.br?subject=Agendar%20demonstra%C3%A7%C3%A3o%20LexControl" style="color:#fff;background:var(--accent-blue);text-align:center;margin-top:6px;font-weight:600;">Agendar demonstração</a>
+      <a href="mailto:contato@lexcontrol.com.br?subject=Agendar%20demonstra%C3%A7%C3%A3o%20LexControl" data-typebot-open style="color:#fff;background:var(--accent-blue);text-align:center;margin-top:6px;font-weight:600;">Agendar demonstração</a>
     </nav>
   </div>
 </header>
@@ -638,7 +638,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       <h1>Tenha uma <span class="grad">visão estratégica</span> do financeiro da sua operação ad exitum</h1>
       <p class="hero-sub">Quando o honorário depende do êxito, cada tese é um ativo. O LexControl transforma sua carteira de contratos ad exitum em uma operação previsível: projeção de honorários, probabilidade de êxito e fluxo de caixa em um só painel.</p>
       <div class="hero-ctas">
-        <a href="#demo" class="btn btn-primary btn-lg">Agendar demonstração</a>
+        <a href="#demo" class="btn btn-primary btn-lg" data-typebot-open>Agendar demonstração</a>
       </div>
     </div>
 
@@ -980,7 +980,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
         <div class="section-eyebrow">Acesso sob demonstração</div>
         <h2>Quanto vale a inteligência financeira que sua operação ainda não enxerga?</h2>
         <p>Agende uma demonstração gratuita de 30 minutos e descubra como a Lex Control pode otimizar a gestão do seu escritório. Conheça todas as funcionalidades da plataforma e encontre o plano ideal para a realidade da sua operação.</p>
-        <a href="mailto:contato@lexcontrol.com.br?subject=Agendar%20demonstra%C3%A7%C3%A3o%20LexControl" class="btn btn-teal btn-lg">Agendar demonstração</a>
+        <a href="mailto:contato@lexcontrol.com.br?subject=Agendar%20demonstra%C3%A7%C3%A3o%20LexControl" data-typebot-open class="btn btn-teal btn-lg">Agendar demonstração</a>
       </div>
     </div>
   </div>
@@ -1145,6 +1145,24 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     }
   }
 })();
+</script>
+
+<!-- Typebot Popup -->
+<script type="module">
+  import Typebot from 'https://cdn.jsdelivr.net/npm/@typebot.io/js@0/dist/web.js'
+
+  Typebot.initPopup({
+    typebot: "form-lex-control-j60uviv",
+    apiHost: "https://meubot.reclameai.com.br",
+  });
+
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('[data-typebot-open]');
+    if(trigger){
+      e.preventDefault();
+      Typebot.open();
+    }
+  });
 </script>
 
 </body>
