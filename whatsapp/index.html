@@ -563,20 +563,57 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   }
   .price-note{text-align:center;font-size:12px;color:var(--text-muted);margin-top:28px;}
 
-  /* ===== Mini formulário WhatsApp ===== */
-  .whats-form{max-width:420px;margin:0 auto;text-align:left;display:flex;flex-direction:column;gap:16px;}
-  .whats-field{display:flex;flex-direction:column;gap:6px;}
-  .whats-field label{font-size:12px;font-weight:600;color:var(--text-secondary);}
-  .whats-field input{
-    width:100%;padding:13px 16px;border-radius:10px;font-size:14px;font-family:inherit;
-    background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);color:#fff;
-    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);outline:none;transition:border-color .15s,background .15s;
+  /* ===== Chat card (popup conversacional) ===== */
+  .chat-overlay{
+    position:fixed;inset:0;background:rgba(5,8,13,0.75);display:none;
+    align-items:center;justify-content:center;z-index:1000;padding:20px;
+    -webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);
   }
-  .whats-field input::placeholder{color:var(--text-muted);}
-  .whats-field input:focus{border-color:var(--accent-teal);background:rgba(255,255,255,0.08);}
-  .whats-field input.field-error{border-color:var(--status-negative);}
-  .whats-submit{width:100%;justify-content:center;margin-top:4px;}
-  .whats-note{font-size:11px;color:var(--text-muted);text-align:center;margin-top:2px;}
+  .chat-overlay.open{display:flex;}
+  .chat-card{
+    position:relative;background:#fff;color:#1c2430;width:100%;max-width:420px;
+    max-height:min(640px,88vh);border-radius:20px;box-shadow:0 30px 80px -20px rgba(0,0,0,0.6);
+    display:flex;flex-direction:column;overflow:hidden;
+  }
+  .chat-close{
+    position:absolute;top:10px;right:12px;background:rgba(0,0,0,0.06);border:none;
+    width:28px;height:28px;border-radius:50%;font-size:18px;line-height:1;color:#5A6A7E;
+    cursor:pointer;z-index:2;
+  }
+  .chat-close:hover{background:rgba(0,0,0,0.1);}
+  .chat-body{padding:30px 22px 22px;overflow-y:auto;display:flex;flex-direction:column;gap:14px;font-size:14px;line-height:1.5;}
+  .chat-body::-webkit-scrollbar{width:5px;}
+  .chat-body::-webkit-scrollbar-thumb{background:rgba(0,0,0,0.15);border-radius:3px;}
+  .chat-row{display:flex;gap:10px;align-items:flex-start;}
+  .chat-avatar{
+    width:26px;height:26px;border-radius:50%;flex-shrink:0;margin-top:2px;
+    background:linear-gradient(135deg,#3B82F6,#A78BFA);
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;
+  }
+  .chat-avatar-spacer{width:26px;flex-shrink:0;}
+  .chat-text{color:#20293a;white-space:pre-line;}
+  .chat-text b{font-weight:700;}
+  .chat-typing{display:flex;gap:4px;align-items:center;height:20px;}
+  .chat-typing span{width:6px;height:6px;border-radius:50%;background:#aab4c2;display:inline-block;animation:chatBlink 1.1s infinite ease-in-out;}
+  .chat-typing span:nth-child(2){animation-delay:.15s;}
+  .chat-typing span:nth-child(3){animation-delay:.3s;}
+  @keyframes chatBlink{0%,80%,100%{opacity:.25;transform:translateY(0);}40%{opacity:1;transform:translateY(-3px);}}
+  .chat-user-row{display:flex;justify-content:flex-end;}
+  .chat-bubble-user{background:#F97316;color:#fff;padding:9px 14px;border-radius:14px;max-width:80%;font-weight:600;font-size:13.5px;}
+  .chat-input-row{display:flex;gap:8px;margin-top:2px;}
+  .chat-input{flex:1;min-width:0;border:1px solid #d8dde5;border-radius:10px;padding:11px 14px;font-size:13.5px;font-family:inherit;outline:none;color:#1c2430;}
+  .chat-input:focus{border-color:#3B82F6;}
+  .chat-phone-wrap{flex:1;min-width:0;display:flex;align-items:center;border:1px solid #d8dde5;border-radius:10px;overflow:hidden;}
+  .chat-phone-cc{display:flex;align-items:center;gap:4px;padding:0 10px;font-size:12.5px;color:#5A6A7E;border-right:1px solid #e4e7eb;height:100%;background:#f7f8fa;flex-shrink:0;}
+  .chat-phone-wrap input{border:none;flex:1;min-width:0;padding:11px 12px;font-size:13.5px;outline:none;color:#1c2430;}
+  .chat-send{width:38px;height:38px;border-radius:50%;background:#3B82F6;border:none;color:#fff;flex-shrink:0;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+  .chat-send:hover{background:#2f6fe0;}
+  .chat-choice-row{display:flex;gap:10px;margin-top:2px;}
+  .chat-choice-btn{flex:1;border-radius:10px;padding:11px;font-size:13.5px;font-weight:700;font-family:inherit;cursor:pointer;border:1px solid transparent;}
+  .chat-choice-btn.solid{background:#3B82F6;color:#fff;}
+  .chat-choice-btn.solid:hover{background:#2f6fe0;}
+  .chat-choice-btn.outline{background:#fff;color:#3B82F6;border-color:#3B82F6;}
+  .chat-choice-btn.outline:hover{background:#eef4ff;}
 
   /* ===== Responsive ===== */
   @media (max-width:960px){
@@ -610,10 +647,21 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     .cell{padding:22px 20px;}
     section{padding:48px 0;}
     .section-head{margin-bottom:32px;}
+    .chat-card{max-height:92vh;}
+    .chat-body{padding:26px 16px 16px;}
+    .chat-phone-cc{padding:0 7px;font-size:11.5px;}
   }
 </style>
 </head>
 <body>
+
+<!-- ===== CHAT CARD (popup conversacional) ===== -->
+<div class="chat-overlay" id="chatOverlay">
+  <div class="chat-card">
+    <button class="chat-close" id="chatClose" aria-label="Fechar">&times;</button>
+    <div class="chat-body" id="chatBody"></div>
+  </div>
+</div>
 
 <!-- ===== TOPBAR (glass flutuante) ===== -->
 <header class="topbar">
@@ -629,7 +677,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       <a href="#demo">Demonstração</a>
       <a href="#depoimentos">Depoimentos</a>
     </nav>
-    <a href="#demo" class="btn btn-primary btn-cta-top">Agendar demonstração</a>
+    <a href="#demo" data-chat-open class="btn btn-primary btn-cta-top">Agendar demonstração</a>
     <button class="nav-toggle" id="navToggle" aria-label="Abrir menu"><span></span></button>
     <nav class="mobile-menu" id="mobileMenu">
       <a href="#produto">Produto</a>
@@ -637,7 +685,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       <a href="#resultados">Resultados</a>
       <a href="#demo">Demonstração</a>
       <a href="#depoimentos">Depoimentos</a>
-      <a href="#demo" style="color:#fff;background:var(--accent-blue);text-align:center;margin-top:6px;font-weight:600;">Agendar demonstração</a>
+      <a href="#demo" data-chat-open style="color:#fff;background:var(--accent-blue);text-align:center;margin-top:6px;font-weight:600;">Agendar demonstração</a>
     </nav>
   </div>
 </header>
@@ -653,7 +701,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       <h1>Tenha uma <span class="grad">visão estratégica</span> do financeiro da sua operação ad exitum</h1>
       <p class="hero-sub">Quando o honorário depende do êxito, cada tese é um ativo. O LexControl transforma sua carteira de contratos ad exitum em uma operação previsível: projeção de honorários, probabilidade de êxito e fluxo de caixa em um só painel.</p>
       <div class="hero-ctas">
-        <a href="#demo" class="btn btn-primary btn-lg">Agendar demonstração</a>
+        <a href="#demo" data-chat-open class="btn btn-primary btn-lg">Agendar demonstração</a>
       </div>
     </div>
 
@@ -986,7 +1034,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- ===== CTA DEMONSTRAÇÃO (mini formulário) ===== -->
+<!-- ===== CTA DEMONSTRAÇÃO (abre o card de chat) ===== -->
 <section id="demo">
   <div class="container">
     <div class="cta-final glass-strong">
@@ -994,22 +1042,8 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       <div class="z1">
         <div class="section-eyebrow">Acesso sob demonstração</div>
         <h2>Quanto vale a inteligência financeira que sua operação ainda não enxerga?</h2>
-        <p>Preencha seus dados e fale agora mesmo com um especialista pelo WhatsApp para agendar sua demonstração gratuita de 30 minutos.</p>
-        <form id="whatsForm" class="whats-form" novalidate>
-          <div class="whats-field">
-            <label for="whatsNome">Nome completo</label>
-            <input type="text" id="whatsNome" name="nome" placeholder="Digite seu nome completo" autocomplete="name" required>
-          </div>
-          <div class="whats-field">
-            <label for="whatsNumero">WhatsApp com DDD</label>
-            <input type="tel" id="whatsNumero" name="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="numeric" required>
-          </div>
-          <button type="submit" class="btn btn-teal btn-lg whats-submit">
-            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.7-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.1-.5-.1-.2-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9 0 1.1.8 2.2 1 2.4.1.2 1.7 2.6 4.1 3.6 2 .8 2.4.7 2.8.6.4-.1 1.3-.5 1.5-1 .2-.5.2-.9.1-1zM12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.2L2 22l4.9-1.3c1.4.8 3.1 1.2 4.9 1.2h.1c5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
-            Continuar no WhatsApp
-          </button>
-          <p class="whats-note">Ao continuar, você será redirecionado(a) para o WhatsApp do LexControl.</p>
-        </form>
+        <p>Fale agora com a Suzy, nossa assistente virtual, e agende sua demonstração gratuita de 30 minutos direto pelo WhatsApp.</p>
+        <a href="#demo" data-chat-open class="btn btn-teal btn-lg">Agendar demonstração</a>
       </div>
     </div>
   </div>
@@ -1176,37 +1210,179 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
 })();
 </script>
 
-<!-- Formulário -> redirecionamento WhatsApp -->
+<!-- Card de chat conversacional -> redirecionamento WhatsApp -->
 <script>
 (function(){
-  var form = document.getElementById('whatsForm');
-  if(!form) return;
-  var nomeInput = document.getElementById('whatsNome');
-  var numInput = document.getElementById('whatsNumero');
+  var overlay = document.getElementById('chatOverlay');
+  var body = document.getElementById('chatBody');
+  var closeBtn = document.getElementById('chatClose');
+  if(!overlay || !body || !closeBtn) return;
+
   var WHATS_PHONE = '5592995060144';
+  var state = { nome:'', numeroDigits:'', started:false };
 
-  numInput.addEventListener('input', function(){
-    var d = numInput.value.replace(/\D/g,'').slice(0,11);
-    var out = d;
-    if(d.length > 2) out = '(' + d.slice(0,2) + ') ' + d.slice(2);
-    if(d.length > 7) out = '(' + d.slice(0,2) + ') ' + d.slice(2,7) + '-' + d.slice(7);
-    numInput.value = out;
-  });
+  function hourGreeting(){
+    var h = new Date().getHours();
+    if(h < 12) return 'Bom dia';
+    if(h < 18) return 'Boa tarde';
+    return 'Boa noite';
+  }
 
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var nome = nomeInput.value.trim();
-    var numeroDigits = numInput.value.replace(/\D/g,'');
-    var ok = true;
+  function escapeHtml(s){
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
 
-    if(nome.length < 2){ nomeInput.classList.add('field-error'); ok = false; } else { nomeInput.classList.remove('field-error'); }
-    if(numeroDigits.length < 10){ numInput.classList.add('field-error'); ok = false; } else { numInput.classList.remove('field-error'); }
-    if(!ok) return;
+  function sendIcon(){
+    return '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M2 21l21-9L2 3v7l15 2-15 2z"/></svg>';
+  }
 
-    var mensagem = 'Olá! Me chamo ' + nome + ' (WhatsApp: ' + numInput.value + '). Gostaria de saber mais sobre o LexControl.';
+  function scrollBottom(){ body.scrollTop = body.scrollHeight; }
+
+  function addNode(el){ body.appendChild(el); scrollBottom(); return el; }
+
+  function addBotMessage(text, withAvatar){
+    var row = document.createElement('div');
+    row.className = 'chat-row';
+    row.innerHTML = (withAvatar ? '<div class="chat-avatar">L</div>' : '<span class="chat-avatar-spacer"></span>') +
+      '<div class="chat-text">' + text + '</div>';
+    addNode(row);
+  }
+
+  function addUserMessage(text){
+    var row = document.createElement('div');
+    row.className = 'chat-user-row';
+    var bubble = document.createElement('div');
+    bubble.className = 'chat-bubble-user';
+    bubble.textContent = text;
+    row.appendChild(bubble);
+    addNode(row);
+  }
+
+  function botTyping(cb, delay){
+    var row = document.createElement('div');
+    row.className = 'chat-row';
+    row.innerHTML = '<span class="chat-avatar-spacer"></span><div class="chat-typing"><span></span><span></span><span></span></div>';
+    addNode(row);
+    setTimeout(function(){
+      row.remove();
+      cb();
+    }, delay || 700);
+  }
+
+  function clearInputArea(el){ if(el && el.parentNode) el.remove(); }
+
+  function stepName(){
+    var wrap = document.createElement('div');
+    wrap.className = 'chat-input-row';
+    wrap.innerHTML = '<input type="text" class="chat-input" id="chatNomeInput" placeholder="Digite seu nome completo" autocomplete="name">' +
+      '<button class="chat-send" id="chatNomeSend" type="button" aria-label="Enviar">' + sendIcon() + '</button>';
+    addNode(wrap);
+    var input = wrap.querySelector('#chatNomeInput');
+    input.focus();
+
+    function submit(){
+      var v = input.value.trim();
+      if(v.length < 2){ input.style.borderColor = '#F87171'; return; }
+      state.nome = v;
+      clearInputArea(wrap);
+      addUserMessage(v);
+      botTyping(function(){
+        addBotMessage('Perfeito\n' + escapeHtml(v) + '\n.', false);
+        botTyping(stepPhone, 900);
+      }, 700);
+    }
+    wrap.querySelector('#chatNomeSend').addEventListener('click', submit);
+    input.addEventListener('keydown', function(e){ if(e.key === 'Enter') submit(); });
+  }
+
+  function stepPhone(){
+    addBotMessage('Agora precisamos que informe seu numero do Whatsapp com DDD para contato.', true);
+    var wrap = document.createElement('div');
+    wrap.className = 'chat-input-row';
+    wrap.innerHTML = '<div class="chat-phone-wrap"><span class="chat-phone-cc">🇧🇷 BR</span><input type="tel" id="chatPhoneInput" placeholder="(92) 9 0000-0000" inputmode="numeric"></div>' +
+      '<button class="chat-send" id="chatPhoneSend" type="button" aria-label="Enviar">' + sendIcon() + '</button>';
+    addNode(wrap);
+    var input = wrap.querySelector('#chatPhoneInput');
+    input.focus();
+
+    input.addEventListener('input', function(){
+      var d = input.value.replace(/\D/g,'').slice(0,11);
+      var out = d;
+      if(d.length > 2) out = '(' + d.slice(0,2) + ') ' + d.slice(2);
+      if(d.length > 7) out = '(' + d.slice(0,2) + ') ' + d.slice(2,7) + '-' + d.slice(7);
+      input.value = out;
+    });
+
+    function submit(){
+      var digits = input.value.replace(/\D/g,'');
+      if(digits.length < 10){ input.style.borderColor = '#F87171'; return; }
+      state.numeroDigits = digits;
+      clearInputArea(wrap);
+      addUserMessage('+55' + digits);
+      botTyping(function(){ stepConfirm(digits); }, 700);
+    }
+    wrap.querySelector('#chatPhoneSend').addEventListener('click', submit);
+    input.addEventListener('keydown', function(e){ if(e.key === 'Enter') submit(); });
+  }
+
+  function formatPhone(digits){
+    var ddd = digits.slice(0,2), rest = digits.slice(2);
+    if(rest.length >= 9) return '(' + ddd + ') ' + rest.slice(0,1) + ' ' + rest.slice(1,5) + '-' + rest.slice(5,9);
+    return '(' + ddd + ') ' + rest.slice(0, Math.max(0,rest.length-4)) + '-' + rest.slice(-4);
+  }
+
+  function stepConfirm(digits){
+    addBotMessage('O Whatsapp está correto:\n' + formatPhone(digits), true);
+    var wrap = document.createElement('div');
+    wrap.className = 'chat-choice-row';
+    wrap.innerHTML = '<button class="chat-choice-btn solid" id="chatOk" type="button">Tudo Certo</button>' +
+      '<button class="chat-choice-btn outline" id="chatFix" type="button">Corrigir</button>';
+    addNode(wrap);
+    wrap.querySelector('#chatOk').addEventListener('click', function(){
+      clearInputArea(wrap);
+      addUserMessage('Tudo Certo');
+      botTyping(stepFinal, 700);
+    });
+    wrap.querySelector('#chatFix').addEventListener('click', function(){
+      clearInputArea(wrap);
+      addUserMessage('Corrigir');
+      botTyping(stepPhone, 700);
+    });
+  }
+
+  function stepFinal(){
+    addBotMessage(escapeHtml(state.nome) + '\n, já tenho todas as respostas que preciso, em breve um de nossos especialistas entrará em contato com você para agendar uma reunião para demonstração do Lex Control 🎉', false);
+    setTimeout(redirectWhats, 1800);
+  }
+
+  function redirectWhats(){
+    var mensagem = 'Olá! Me chamo ' + state.nome + ' (WhatsApp: +55' + state.numeroDigits + '). Gostaria de saber mais sobre o LexControl.';
     var url = 'https://api.whatsapp.com/send?phone=' + WHATS_PHONE + '&text=' + encodeURIComponent(mensagem);
     window.location.href = url;
+  }
+
+  function openOverlay(){ overlay.classList.add('open'); }
+  function closeOverlay(){ overlay.classList.remove('open'); }
+
+  function startChat(){
+    if(state.started){ openOverlay(); return; }
+    state.started = true;
+    body.innerHTML = '';
+    openOverlay();
+    var greet = hourGreeting();
+    addBotMessage(greet + '\n, Aqui é a Suzy assistente virtual do Lex Control e vou lhe encaminhar para um de nossos especialistas..\n\nmas antes vou precisar fazer algumas perguntinhas para entender melhor seu perfil 😊', false);
+    botTyping(function(){
+      addBotMessage('Por favor, digita pra mim <b>seu nome</b>', true);
+      stepName();
+    }, 900);
+  }
+
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('[data-chat-open]');
+    if(trigger){ e.preventDefault(); startChat(); }
   });
+  closeBtn.addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) closeOverlay(); });
 })();
 </script>
 
