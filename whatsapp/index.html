@@ -1210,7 +1210,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
 })();
 </script>
 
-<!-- Card de chat conversacional -> redirecionamento WhatsApp -->
+<!-- Card de chat conversacional -> rastreamento Meta CAPI -> redirecionamento WhatsApp -->
 <script>
 (function(){
   var overlay = document.getElementById('chatOverlay');
@@ -1219,6 +1219,8 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   if(!overlay || !body || !closeBtn) return;
 
   var WHATS_PHONE = '5592995060144';
+  // TODO: troque pela URL real do seu webhook (ex: n8n) que recebe este payload e reenvia pra Meta.
+  var META_TRACKING_WEBHOOK = 'https://SEU-WEBHOOK-AQUI.exemplo.com/meta-capi';
   var state = { nome:'', numeroDigits:'', started:false };
 
   function hourGreeting(){
@@ -1266,12 +1268,33 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     setTimeout(function(){
       row.remove();
       cb();
-    }, delay || 700);
+    }, delay || 750);
+  }
+
+  // Entrega as mensagens uma a uma, com "digitando..." antes de cada uma —
+  // nenhuma mensagem chega pronta de uma vez, nem a primeira.
+  function playSequence(lines, cb){
+    var i = 0;
+    function next(){
+      if(i >= lines.length){ if(cb) cb(); return; }
+      var line = lines[i++];
+      botTyping(function(){
+        addBotMessage(line.text, !!line.avatar);
+        next();
+      }, line.delay || (750 + Math.random()*350));
+    }
+    next();
   }
 
   function clearInputArea(el){ if(el && el.parentNode) el.remove(); }
 
   function stepName(){
+    playSequence([
+      {text:'Por favor, digita pra mim <b>seu nome</b>', avatar:true}
+    ], attachNameInput);
+  }
+
+  function attachNameInput(){
     var wrap = document.createElement('div');
     wrap.className = 'chat-input-row';
     wrap.innerHTML = '<input type="text" class="chat-input" id="chatNomeInput" placeholder="Digite seu nome completo" autocomplete="name">' +
@@ -1286,17 +1309,23 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       state.nome = v;
       clearInputArea(wrap);
       addUserMessage(v);
-      botTyping(function(){
-        addBotMessage('Perfeito\n' + escapeHtml(v) + '\n.', false);
-        botTyping(stepPhone, 900);
-      }, 700);
+      playSequence([
+        {text:'Perfeito', avatar:false},
+        {text:escapeHtml(v), avatar:false},
+        {text:'.', avatar:false}
+      ], stepPhone);
     }
     wrap.querySelector('#chatNomeSend').addEventListener('click', submit);
     input.addEventListener('keydown', function(e){ if(e.key === 'Enter') submit(); });
   }
 
   function stepPhone(){
-    addBotMessage('Agora precisamos que informe seu numero do Whatsapp com DDD para contato.', true);
+    playSequence([
+      {text:'Agora precisamos que informe seu numero do Whatsapp com DDD para contato.', avatar:true}
+    ], attachPhoneInput);
+  }
+
+  function attachPhoneInput(){
     var wrap = document.createElement('div');
     wrap.className = 'chat-input-row';
     wrap.innerHTML = '<div class="chat-phone-wrap"><span class="chat-phone-cc">🇧🇷 BR</span><input type="tel" id="chatPhoneInput" placeholder="(92) 9 0000-0000" inputmode="numeric"></div>' +
@@ -1319,7 +1348,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       state.numeroDigits = digits;
       clearInputArea(wrap);
       addUserMessage('+55' + digits);
-      botTyping(function(){ stepConfirm(digits); }, 700);
+      stepConfirm(digits);
     }
     wrap.querySelector('#chatPhoneSend').addEventListener('click', submit);
     input.addEventListener('keydown', function(e){ if(e.key === 'Enter') submit(); });
@@ -1332,7 +1361,13 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   }
 
   function stepConfirm(digits){
-    addBotMessage('O Whatsapp está correto:\n' + formatPhone(digits), true);
+    playSequence([
+      {text:'O Whatsapp está correto:', avatar:true},
+      {text:formatPhone(digits), avatar:false}
+    ], attachConfirmButtons);
+  }
+
+  function attachConfirmButtons(){
     var wrap = document.createElement('div');
     wrap.className = 'chat-choice-row';
     wrap.innerHTML = '<button class="chat-choice-btn solid" id="chatOk" type="button">Tudo Certo</button>' +
@@ -1341,24 +1376,128 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     wrap.querySelector('#chatOk').addEventListener('click', function(){
       clearInputArea(wrap);
       addUserMessage('Tudo Certo');
-      botTyping(stepFinal, 700);
+      stepFinal();
     });
     wrap.querySelector('#chatFix').addEventListener('click', function(){
       clearInputArea(wrap);
       addUserMessage('Corrigir');
-      botTyping(stepPhone, 700);
+      stepPhone();
     });
   }
 
   function stepFinal(){
-    addBotMessage(escapeHtml(state.nome) + '\n, já tenho todas as respostas que preciso, em breve um de nossos especialistas entrará em contato com você para agendar uma reunião para demonstração do Lex Control 🎉', false);
-    setTimeout(redirectWhats, 1800);
+    playSequence([
+      {text:escapeHtml(state.nome), avatar:false},
+      {text:', já tenho todas as respostas que preciso, em breve um de nossos especialistas entrará em contato com você para agendar uma reunião para demonstração do Lex Control 🎉', avatar:false}
+    ], function(){
+      sendMetaTracking();
+      setTimeout(redirectWhats, 1500);
+    });
   }
 
   function redirectWhats(){
     var mensagem = 'Olá! Me chamo ' + state.nome + ' (WhatsApp: +55' + state.numeroDigits + '). Gostaria de saber mais sobre o LexControl.';
     var url = 'https://api.whatsapp.com/send?phone=' + WHATS_PHONE + '&text=' + encodeURIComponent(mensagem);
     window.location.href = url;
+  }
+
+  /* ===== Rastreamento Meta Conversions API ===== */
+
+  function sha256Hex(str){
+    return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)).then(function(buf){
+      return Array.prototype.map.call(new Uint8Array(buf), function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+    });
+  }
+
+  function normalize(s){ return String(s || '').trim().toLowerCase(); }
+
+  function getCookie(name){
+    var m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+
+  function getExternalId(){
+    try{
+      var id = localStorage.getItem('lex_external_id');
+      if(!id){
+        id = (crypto.randomUUID ? crypto.randomUUID() : ('id-' + Date.now() + '-' + Math.random().toString(16).slice(2)));
+        localStorage.setItem('lex_external_id', id);
+      }
+      return id;
+    }catch(e){ return ''; }
+  }
+
+  function getUtms(){
+    var params = new URLSearchParams(window.location.search);
+    return {
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      utm_content: params.get('utm_content') || '',
+      utm_term: params.get('utm_term') || '',
+      utm_id: params.get('utm_id') || ''
+    };
+  }
+
+  // Monta o payload no formato esperado pelo seu workflow de envio à Meta e o envia
+  // via POST (fire-and-forget, com keepalive para sobreviver ao redirecionamento).
+  function sendMetaTracking(){
+    if(!window.crypto || !window.crypto.subtle){ return; }
+    var eventId = (crypto.randomUUID ? crypto.randomUUID() : ('evt-' + Date.now() + '-' + Math.random().toString(16).slice(2)));
+    var nameParts = state.nome.trim().split(/\s+/);
+    var firstName = nameParts[0] || '';
+    var lastName = nameParts.slice(1).join(' ') || '';
+    var phoneE164 = '55' + state.numeroDigits; // sem "+", como a Meta espera antes do hash
+    var utms = getUtms();
+
+    Promise.all([
+      sha256Hex(normalize(firstName)),
+      sha256Hex(normalize(lastName)),
+      sha256Hex(phoneE164),
+      sha256Hex('br')
+    ]).then(function(hashes){
+      var payload = {
+        data: [{
+          event_name: 'Lead',
+          event_time: Math.floor(Date.now() / 1000),
+          event_id: eventId,
+          action_source: 'website',
+          event_source_url: window.location.href,
+          user_data: {
+            ph: [hashes[2]],
+            fn: [hashes[0]],
+            ln: [hashes[1]],
+            country: [hashes[3]],
+            external_id: [getExternalId()],
+            // client_ip_address não é confiável via JS; o webhook (n8n) deve capturá-lo
+            // a partir do próprio request que recebe este POST.
+            client_user_agent: navigator.userAgent,
+            fbc: getCookie('_fbc'),
+            fbp: getCookie('_fbp')
+          },
+          custom_data: {
+            utm_source: utms.utm_source,
+            utm_medium: utms.utm_medium,
+            utm_campaign: utms.utm_campaign,
+            utm_content: utms.utm_content,
+            utm_term: utms.utm_term,
+            utm_id: utms.utm_id
+          }
+        }]
+      };
+
+      if(META_TRACKING_WEBHOOK.indexOf('SEU-WEBHOOK-AQUI') !== -1){
+        console.info('[Meta CAPI] webhook ainda não configurado. Payload que seria enviado:', payload);
+        return;
+      }
+
+      fetch(META_TRACKING_WEBHOOK, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        keepalive: true
+      }).catch(function(err){ console.warn('Falha ao enviar tracking Meta:', err); });
+    });
   }
 
   function openOverlay(){ overlay.classList.add('open'); }
@@ -1369,12 +1508,11 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     state.started = true;
     body.innerHTML = '';
     openOverlay();
-    var greet = hourGreeting();
-    addBotMessage(greet + '\n, Aqui é a Suzy assistente virtual do Lex Control e vou lhe encaminhar para um de nossos especialistas..\n\nmas antes vou precisar fazer algumas perguntinhas para entender melhor seu perfil 😊', false);
-    botTyping(function(){
-      addBotMessage('Por favor, digita pra mim <b>seu nome</b>', true);
-      stepName();
-    }, 900);
+    playSequence([
+      {text: hourGreeting(), avatar:false, delay:650},
+      {text: ', Aqui é a Suzy assistente virtual do Lex Control e vou lhe encaminhar para um de nossos especialistas..', avatar:false},
+      {text: 'mas antes vou precisar fazer algumas perguntinhas para entender melhor seu perfil 😊', avatar:false}
+    ], stepName);
   }
 
   document.addEventListener('click', function(e){
