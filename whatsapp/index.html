@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1012574030959726');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LexControl — Software de Operações Jurídicas Ad Exitum</title>
+<meta name="description" content="LexControl é Tenha uma visão estratégica do financeiro da sua operação ad exitum. Controle carteiras de êxito, projete honorários e acompanhe cada tese em tempo real.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-app:#0C111A;
+    --bg-sidebar:#101720;
+    --bg-card:#131D28;
+    --bg-card-alt:#0F1924;
+    --text-primary:#FFFFFF;
+    --text-secondary:#8A9BB0;
+    --text-muted:#5A6A7E;
+    --accent-teal:#00E5CC;
+    --accent-teal-dim:#00B8A3;
+    --accent-blue:#3B82F6;
+    --accent-blue-dim:#1D65D8;
+    --accent-purple:#A78BFA;
+    --status-warning:#F59E0B;
+    --status-negative:#F87171;
+    --border-default:rgba(255,255,255,0.07);
+    --border-strong:rgba(255,255,255,0.12);
+    --radius-sm:4px;
+    --radius-md:8px;
+    --radius-lg:12px;
+    --radius-card:10px;
+    --radius-pill:999px;
+    /* glass tokens */
+    --glass-bg:rgba(19,29,40,0.55);
+    --glass-bg-strong:rgba(19,29,40,0.75);
+    --glass-border:rgba(255,255,255,0.10);
+    --glass-highlight:rgba(255,255,255,0.06);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;width:100%;}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg-app);
+    color:var(--text-primary);
+    font-size:14px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    width:100%;
+    max-width:100vw;
+    overscroll-behavior-x:none;
+    touch-action:pan-y;
+  }
+  .container{max-width:1160px;margin:0 auto;padding:0 clamp(16px,5vw,24px);}
+
+  /* ===== ambient glows (para o glass ter o que refratar) ===== */
+  .glow{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none;z-index:0;}
+  .relative{position:relative;}
+  .z1{position:relative;z-index:1;}
+
+  /* ===== GLASS ===== */
+  .glass{
+    background:var(--glass-bg);
+    -webkit-backdrop-filter:blur(18px) saturate(140%);
+    backdrop-filter:blur(18px) saturate(140%);
+    border:1px solid var(--glass-border);
+    box-shadow:inset 0 1px 0 var(--glass-highlight), 0 20px 50px -20px rgba(0,0,0,0.55);
+  }
+  .glass-strong{
+    background:var(--glass-bg-strong);
+    -webkit-backdrop-filter:blur(24px) saturate(150%);
+    backdrop-filter:blur(24px) saturate(150%);
+    border:1px solid var(--glass-border);
+    box-shadow:inset 0 1px 0 var(--glass-highlight), 0 30px 70px -25px rgba(0,0,0,0.65);
+  }
+
+  /* ===== Topbar ===== */
+  .topbar{
+    position:sticky;top:12px;z-index:100;
+    max-width:1160px;margin:12px auto 0;padding:0 clamp(12px,4vw,24px);
+  }
+  .topbar-inner{
+    position:relative;
+    display:flex;align-items:center;justify-content:space-between;
+    height:60px;padding:0 clamp(12px,3vw,20px);border-radius:16px;
+    background:rgba(16,23,32,0.6);
+    -webkit-backdrop-filter:blur(20px) saturate(150%);
+    backdrop-filter:blur(20px) saturate(150%);
+    border:1px solid var(--glass-border);
+    box-shadow:inset 0 1px 0 var(--glass-highlight), 0 12px 40px -12px rgba(0,0,0,0.5);
+    gap:10px;
+  }
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:16px;letter-spacing:-0.01em;flex-shrink:0;}
+  .logo-mark{
+    width:30px;height:30px;border-radius:8px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--accent-blue),var(--accent-teal));
+    display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:14px;color:#0C111A;
+  }
+  .logo span em{font-style:normal;color:var(--accent-teal);}
+  nav.menu{display:flex;gap:26px;}
+  nav.menu a{color:var(--text-secondary);text-decoration:none;font-size:13px;font-weight:500;transition:color .15s;white-space:nowrap;}
+  nav.menu a:hover{color:var(--text-primary);}
+  .nav-toggle{
+    display:none;align-items:center;justify-content:center;
+    width:36px;height:36px;border-radius:8px;flex-shrink:0;
+    background:rgba(255,255,255,0.06);border:1px solid var(--border-strong);
+    cursor:pointer;
+  }
+  .nav-toggle span{position:relative;width:16px;height:1.5px;background:#fff;display:block;}
+  .nav-toggle span::before,.nav-toggle span::after{
+    content:"";position:absolute;left:0;width:16px;height:1.5px;background:#fff;
+  }
+  .nav-toggle span::before{top:-5px;}
+  .nav-toggle span::after{top:5px;}
+  .mobile-menu{
+    display:none;position:absolute;top:calc(100% + 8px);left:0;right:0;
+    flex-direction:column;gap:2px;padding:10px;border-radius:14px;
+    background:rgba(16,23,32,0.92);
+    -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+    border:1px solid var(--glass-border);
+    box-shadow:0 20px 50px -12px rgba(0,0,0,0.6);
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{
+    color:var(--text-secondary);text-decoration:none;font-size:14px;font-weight:500;
+    padding:11px 12px;border-radius:8px;
+  }
+  .mobile-menu a:active,.mobile-menu a:hover{background:rgba(255,255,255,0.06);color:#fff;}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    border-radius:var(--radius-md);padding:10px 20px;
+    font-size:13px;font-weight:600;text-decoration:none;cursor:pointer;
+    border:none;font-family:inherit;transition:all .15s;
+  }
+  .btn-primary{background:var(--accent-blue);color:#fff;box-shadow:0 8px 24px -8px rgba(59,130,246,0.6);}
+  .btn-primary:hover{background:var(--accent-blue-dim);}
+  .btn-ghost{
+    background:rgba(255,255,255,0.06);color:#fff;
+    border:1px solid rgba(255,255,255,0.10);
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  }
+  .btn-ghost:hover{background:rgba(255,255,255,0.10);}
+  .btn-lg{padding:14px 28px;font-size:14px;border-radius:10px;}
+  .btn-cta-top{flex-shrink:0;}
+  .btn-teal{background:var(--accent-teal);color:#0C111A;box-shadow:0 8px 28px -8px rgba(0,229,204,0.5);}
+  .btn-teal:hover{background:var(--accent-teal-dim);}
+
+  /* ===== Hero ===== */
+  .hero{position:relative;padding:96px 0 72px;overflow:visible;}
+  .hero .glow.g1{width:520px;height:420px;top:-160px;right:-80px;background:rgba(59,130,246,0.22);}
+  .hero .glow.g2{width:420px;height:380px;top:60px;left:-140px;background:rgba(0,229,204,0.13);}
+  .hero .glow.g3{width:300px;height:300px;bottom:-120px;right:30%;background:rgba(167,139,250,0.12);}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(0,229,204,0.08);
+    border:1px solid rgba(0,229,204,0.25);
+    color:var(--accent-teal);
+    border-radius:var(--radius-pill);
+    padding:6px 14px;font-size:11px;font-weight:600;
+    text-transform:uppercase;letter-spacing:0.08em;
+    margin-bottom:24px;
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  }
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent-teal);box-shadow:0 0 8px var(--accent-teal);}
+  h1{font-size:clamp(28px,6vw,44px);line-height:1.15;font-weight:700;letter-spacing:-0.02em;margin-bottom:20px;}
+  h1 .grad{
+    background:linear-gradient(90deg,var(--accent-teal),var(--accent-blue));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero-sub{font-size:clamp(14px,3vw,16px);color:var(--text-secondary);max-width:520px;margin-bottom:32px;}
+  .hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:36px;}
+  .hero-ctas .btn{width:100%;justify-content:center;}
+  @media (min-width:481px){ .hero-ctas .btn{width:auto;} }
+  .hero-note{font-size:12px;color:var(--text-muted);}
+  .hero-note strong{color:var(--text-secondary);font-weight:600;}
+
+  /* ===== shadcn-style primitives ===== */
+  .ui-card{border-radius:14px;padding:20px;}
+  .ui-card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:4px;}
+  .ui-card-title{font-size:14px;font-weight:600;color:var(--text-primary);letter-spacing:-0.01em;}
+  .ui-card-desc{font-size:12px;color:var(--text-secondary);font-weight:400;}
+  .ui-card-content{margin-top:14px;}
+  .ui-card-footer{
+    margin-top:14px;padding-top:12px;border-top:1px solid var(--border-default);
+    display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-secondary);
+  }
+  .ui-card-footer b{color:var(--text-primary);font-weight:600;}
+  .ui-badge{
+    display:inline-flex;align-items:center;gap:5px;
+    border-radius:var(--radius-pill);padding:2px 10px;
+    font-size:11px;font-weight:500;line-height:1.6;
+    border:1px solid transparent;white-space:nowrap;
+  }
+  .ui-badge.outline{border-color:var(--border-strong);color:var(--text-secondary);background:rgba(255,255,255,0.03);}
+  .ui-badge.teal{background:rgba(0,229,204,0.10);color:var(--accent-teal);border-color:rgba(0,229,204,0.22);}
+  .ui-badge.blue{background:rgba(59,130,246,0.12);color:#7EB0FA;border-color:rgba(59,130,246,0.28);}
+  .ui-badge.purple{background:rgba(167,139,250,0.12);color:var(--accent-purple);border-color:rgba(167,139,250,0.26);}
+  .ui-badge.warn{background:rgba(245,158,11,0.12);color:var(--status-warning);border-color:rgba(245,158,11,0.26);}
+  .ui-tabs{
+    display:inline-flex;gap:2px;padding:3px;border-radius:var(--radius-md);
+    background:rgba(255,255,255,0.05);border:1px solid var(--border-default);
+  }
+  .ui-tab{
+    border-radius:6px;padding:4px 12px;font-size:11px;font-weight:500;
+    color:var(--text-secondary);cursor:default;
+  }
+  .ui-tab.active{background:rgba(255,255,255,0.09);color:var(--text-primary);box-shadow:inset 0 1px 0 rgba(255,255,255,0.06);}
+  .ui-separator{height:1px;background:var(--border-default);border:none;margin:12px 0;}
+  .ui-tooltip{
+    position:absolute;border-radius:var(--radius-md);
+    background:rgba(15,25,36,0.92);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+    border:1px solid var(--border-strong);
+    box-shadow:0 10px 30px -8px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.07);
+    padding:10px 12px;font-size:11px;min-width:150px;z-index:5;
+  }
+  .ui-tooltip .tt-label{color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;font-weight:600;}
+  .ui-tooltip .tt-row{display:flex;align-items:center;justify-content:space-between;gap:14px;color:var(--text-secondary);padding:1px 0;}
+  .ui-tooltip .tt-row b{color:var(--text-primary);font-weight:600;font-variant-numeric:tabular-nums;}
+  .tt-dot{width:8px;height:8px;border-radius:2px;display:inline-block;margin-right:6px;}
+  .kpi-label{font-size:11px;font-weight:500;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px;}
+  .kpi-value{font-size:clamp(15px,3vw,24px);font-weight:700;line-height:1.2;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;word-break:break-word;}
+  .kpi-sub{font-size:12px;margin-top:4px;color:var(--text-secondary);}
+  .up{color:var(--accent-teal);}
+  .warn-t{color:var(--status-warning);}
+
+  /* chart svg shadcn look */
+  .chart-svg{width:100%;height:auto;display:block;}
+  .chart-svg text{font-family:'Inter',system-ui,sans-serif;}
+  .axis-label{font-size:10px;fill:var(--text-muted);}
+  .legend-inline{display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;}
+  .legend-inline span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary);}
+  .legend-inline i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+
+  /* ===== BENTO GRID (hero mock) ===== */
+  .bento-hero{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:14px;position:relative;
+  }
+  .bento-hero .span2{grid-column:span 2;}
+
+  /* ===== Strip ===== */
+  .strip{padding:20px 0 0;}
+  .strip-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+    border-radius:16px;padding:22px 28px;
+  }
+  .strip-label{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.1em;}
+  .strip-logos{display:flex;gap:36px;flex-wrap:wrap;}
+  .strip-logos span{font-size:14px;font-weight:700;color:var(--text-muted);letter-spacing:0.02em;}
+
+  /* ===== Sections ===== */
+  section{padding:88px 0;position:relative;}
+  .section-eyebrow{font-size:11px;font-weight:600;color:var(--accent-teal);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;}
+  h2{font-size:clamp(22px,4.6vw,32px);font-weight:700;letter-spacing:-0.02em;line-height:1.25;margin-bottom:16px;}
+  .section-sub{font-size:clamp(13px,3vw,15px);color:var(--text-secondary);max-width:620px;}
+  .section-head{margin-bottom:44px;}
+  .center{text-align:center;}
+  .center .section-sub{margin:0 auto;}
+
+  /* ===== BENTO principal ===== */
+  .bento{
+    display:grid;
+    grid-template-columns:repeat(6,1fr);
+    gap:16px;
+  }
+  .bento > .cell{border-radius:16px;padding:26px;transition:transform .2s, border-color .2s;position:relative;overflow:hidden;}
+  .bento > .cell:hover{transform:translateY(-3px);border-color:var(--border-strong);}
+  .c-4{grid-column:span 4;}
+  .c-3{grid-column:span 3;}
+  .c-2{grid-column:span 2;}
+  .c-6{grid-column:span 6;}
+  .cell h3{font-size:17px;font-weight:600;margin-bottom:8px;letter-spacing:-0.01em;}
+  .cell > p{font-size:13px;color:var(--text-secondary);margin-bottom:16px;max-width:480px;}
+  .cell .inner-glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;}
+  .cell-icon{
+    width:38px;height:38px;border-radius:10px;
+    display:flex;align-items:center;justify-content:center;font-size:17px;
+    margin-bottom:16px;border:1px solid var(--border-default);
+    background:rgba(255,255,255,0.04);
+  }
+
+  /* mini bar list (funil) */
+  .funnel{display:flex;flex-direction:column;gap:11px;}
+  .funnel-item{display:flex;flex-direction:column;gap:5px;}
+  .funnel-top{display:flex;justify-content:space-between;font-size:12px;color:var(--text-secondary);}
+  .funnel-top b{color:var(--text-primary);font-weight:600;font-variant-numeric:tabular-nums;}
+  .funnel-bar{height:9px;border-radius:var(--radius-pill);background:rgba(255,255,255,0.05);overflow:hidden;}
+  .funnel-fill{height:100%;border-radius:var(--radius-pill);}
+
+  /* table shadcn */
+  .ui-table{width:100%;font-size:12px;}
+  .trow{
+    display:grid;grid-template-columns:1.8fr .8fr .6fr .9fr;gap:10px;
+    padding:10px 4px;border-bottom:1px solid var(--border-default);align-items:center;
+  }
+  .trow.head{color:var(--text-muted);font-size:10px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
+  .trow:last-child{border-bottom:none;}
+  .num{font-variant-numeric:tabular-nums;}
+
+  /* donut */
+  .donut-wrap{display:flex;align-items:center;gap:22px;flex-wrap:wrap;}
+  .donut{position:relative;width:140px;height:140px;flex-shrink:0;}
+  .donut svg{transform:rotate(-90deg);}
+  .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .donut-center b{font-size:26px;font-weight:700;letter-spacing:-0.02em;}
+  .donut-center small{font-size:10px;color:var(--text-secondary);text-transform:uppercase;letter-spacing:.06em;}
+  .legend{display:flex;flex-direction:column;gap:9px;}
+  .legend-item{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-secondary);}
+  .legend-item b{color:var(--text-primary);font-weight:600;margin-left:auto;font-variant-numeric:tabular-nums;}
+  .swatch{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+
+  /* ===== KPI band ===== */
+  .kpi-band{padding:8px 0 0;}
+  .kpi-band-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .band-kpi{border-radius:16px;padding:28px 22px;text-align:center;}
+  .band-kpi b{
+    display:block;font-size:clamp(24px,6vw,34px);font-weight:700;letter-spacing:-0.02em;
+    background:linear-gradient(90deg,var(--accent-teal),var(--accent-blue));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .band-kpi span{font-size:12px;color:var(--text-secondary);}
+
+  /* ===== Depoimentos bento ===== */
+  .quotes{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .quote-card{border-radius:16px;padding:26px;display:flex;flex-direction:column;gap:16px;}
+  .quote-card p{font-size:13.5px;color:var(--text-primary);font-style:italic;}
+  .quote-who{display:flex;align-items:center;gap:12px;margin-top:auto;}
+  .avatar{
+    width:38px;height:38px;border-radius:50%;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+    font-size:13px;font-weight:700;color:#0C111A;
+  }
+  .quote-who b{display:block;font-size:13px;font-weight:600;}
+  .quote-who span{font-size:12px;color:var(--text-muted);}
+  .stars{color:var(--status-warning);font-size:12px;letter-spacing:2px;}
+
+  /* ===== CTA final ===== */
+  .cta-final{
+    position:relative;text-align:center;border-radius:20px;
+    padding:72px 40px;overflow:hidden;
+  }
+  .cta-final .glow.g1{width:420px;height:300px;top:-140px;left:50%;transform:translateX(-50%);background:rgba(0,229,204,0.14);}
+  .cta-final h2{margin-bottom:14px;}
+  .cta-final p{color:var(--text-secondary);max-width:520px;margin:0 auto 32px;}
+
+  /* ===== Footer ===== */
+  footer{border-top:1px solid var(--border-default);padding:40px 0;margin-top:88px;}
+  .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+  footer p{font-size:12px;color:var(--text-muted);}
+  .footer-links{display:flex;gap:24px;}
+  .footer-links a{font-size:12px;color:var(--text-secondary);text-decoration:none;}
+  .footer-links a:hover{color:var(--text-primary);}
+
+  /* ===== APP SHOT (recriação fiel do dashboard) ===== */
+  .app-shot{border-radius:16px;}
+  .browser-bar{
+    height:38px;display:flex;align-items:center;gap:14px;padding:0 16px;
+    background:#0A0E15;border-bottom:1px solid var(--border-default);
+  }
+  .browser-dots{display:flex;gap:6px;flex-shrink:0;}
+  .browser-dots span{width:10px;height:10px;border-radius:50%;display:block;}
+  .browser-dots span:nth-child(1){background:#F87171;}
+  .browser-dots span:nth-child(2){background:#F59E0B;}
+  .browser-dots span:nth-child(3){background:#00E5CC;}
+  .browser-url{flex:1;display:flex;justify-content:center;}
+  .browser-url span{
+    background:rgba(255,255,255,0.05);border:1px solid var(--border-default);
+    border-radius:6px;padding:4px 18px;font-size:11px;color:var(--text-muted);
+  }
+  .app-shell{display:flex;min-width:960px;}
+  .app-sidebar{
+    width:224px;flex-shrink:0;background:var(--bg-sidebar);
+    border-right:1px solid var(--border-default);padding:16px 12px 18px;
+    display:flex;flex-direction:column;
+  }
+  .app-brand{display:flex;align-items:center;gap:9px;font-weight:700;font-size:14px;margin-bottom:16px;padding:0 6px;}
+  .app-brand .mark{
+    width:26px;height:26px;border-radius:7px;flex-shrink:0;
+    background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));
+    display:flex;align-items:center;justify-content:center;font-size:12px;
+  }
+  .app-user{background:rgba(255,255,255,0.03);border:1px solid var(--border-default);border-radius:10px;padding:10px 12px;margin-bottom:16px;}
+  .app-user-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;}
+  .app-user-avatar{
+    width:24px;height:24px;border-radius:50%;flex-shrink:0;
+    background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));
+    display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;
+  }
+  .app-user-toggle{color:var(--text-muted);font-size:12px;letter-spacing:2px;}
+  .app-user-date{font-size:9px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px;}
+  .app-user-welcome{font-size:12px;font-weight:600;display:flex;align-items:center;gap:6px;}
+  .app-nav-group{font-size:9px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;margin:14px 8px 6px;}
+  .app-nav-item{
+    display:flex;align-items:center;gap:9px;font-size:12px;color:var(--text-secondary);
+    padding:8px 10px;border-radius:8px;font-weight:500;
+  }
+  .app-nav-item.active{background:rgba(255,255,255,0.08);color:#fff;}
+  .app-nav-item .ic{width:14px;text-align:center;flex-shrink:0;opacity:.9;}
+  .app-sidebar-footer{margin-top:auto;padding-top:14px;}
+  .app-logo-btn{
+    background:linear-gradient(135deg,var(--accent-blue),var(--accent-purple));
+    color:#fff;text-align:center;padding:11px;border-radius:10px;font-size:12px;font-weight:700;
+  }
+  .app-main{flex:1;min-width:0;background:var(--bg-app);padding:20px 22px 22px;}
+  .app-topbar-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:10px;flex-wrap:wrap;}
+  .app-filter-pill{
+    display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.05);
+    border:1px solid var(--border-default);border-radius:var(--radius-pill);
+    padding:7px 16px;font-size:11px;color:var(--text-secondary);font-weight:500;
+  }
+  .app-export-btn{
+    display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,0.05);
+    border:1px solid var(--border-strong);border-radius:8px;
+    padding:8px 16px;font-size:11px;color:#fff;font-weight:600;
+  }
+  .app-kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px;}
+  .app-kpi{background:var(--bg-card);border:1px solid var(--border-default);border-radius:10px;padding:16px 18px;}
+  .app-kpi .kpi-value{font-size:19px;}
+  .app-row{display:grid;gap:14px;margin-bottom:14px;}
+  .app-row.cols-a{grid-template-columns:2.1fr 1fr;}
+  .app-row.cols-b{grid-template-columns:1fr 1fr;}
+  .app-panel{background:var(--bg-card);border:1px solid var(--border-default);border-radius:10px;padding:18px 20px;min-width:0;display:flex;flex-direction:column;}
+  .app-panel h4{font-size:13px;font-weight:600;margin-bottom:2px;flex-shrink:0;}
+  .app-panel .sub{font-size:11px;color:var(--text-muted);margin-bottom:14px;flex-shrink:0;}
+  .app-panel > .chart-svg{flex:1 1 auto;height:100%;min-height:90px;}
+  .app-panel .app-legend-inline{flex-shrink:0;}
+  .app-legend-inline{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap;}
+  .app-legend-inline span{display:inline-flex;align-items:center;gap:6px;font-size:11px;color:var(--text-secondary);}
+  .app-legend-inline i{width:9px;height:9px;border-radius:2px;display:inline-block;}
+  .pie-donut{width:130px;height:130px;border-radius:50%;flex-shrink:0;position:relative;}
+  .pie-donut-center{
+    position:absolute;inset:22px;border-radius:50%;background:var(--bg-card);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+  }
+  .pie-donut-center b{font-size:24px;font-weight:700;letter-spacing:-0.02em;}
+  .pie-legend{display:flex;flex-direction:column;gap:9px;flex:1;min-width:120px;max-width:100%;}
+  .pie-legend-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 18px;font-size:12px;margin-top:16px;}
+  .pie-legend-grid .li{display:flex;align-items:center;gap:8px;color:var(--text-secondary);}
+  .pie-legend-grid .li b{margin-left:auto;color:var(--text-primary);font-weight:600;font-variant-numeric:tabular-nums;}
+  .pie-legend-grid .li.full{grid-column:1 / -1;}
+  .app-shot-scroll{
+    overflow-x:auto;overflow-y:hidden;border-radius:16px;position:relative;
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;
+    overscroll-behavior-x:contain;touch-action:pan-x pan-y;
+  }
+  .app-shot-scroll::-webkit-scrollbar{display:none;height:0;width:0;}
+  .app-scroll-hint{
+    display:none;align-items:center;gap:6px;justify-content:center;
+    font-size:11px;color:var(--text-muted);margin-bottom:12px;
+  }
+
+  /* ===== PREÇOS ===== */
+  .pricing{position:relative;overflow:hidden;}
+  /* fundo em grade + brilho (mimetiza sparkles/ellipse do componente) */
+  .pricing-bg{
+    position:absolute;inset:0;top:-40px;z-index:0;pointer-events:none;
+    background-image:
+      linear-gradient(to right,rgba(255,255,255,0.04) 1px,transparent 1px),
+      linear-gradient(to bottom,rgba(255,255,255,0.03) 1px,transparent 1px);
+    background-size:70px 80px;
+    -webkit-mask-image:radial-gradient(60% 45% at 50% 12%,#000,transparent);
+    mask-image:radial-gradient(60% 45% at 50% 12%,#000,transparent);
+  }
+  .pricing-glow{
+    position:absolute;top:-160px;left:50%;transform:translateX(-50%);
+    width:900px;height:420px;border-radius:50%;z-index:0;pointer-events:none;
+    background:radial-gradient(circle at center,rgba(49,49,245,0.28),transparent 62%);
+    filter:blur(70px);
+  }
+  .pricing-toggle{display:flex;justify-content:center;margin:26px 0 40px;padding:0 8px;}
+  .switch{
+    position:relative;display:inline-flex;max-width:100%;padding:4px;border-radius:var(--radius-pill);
+    background:rgba(16,23,32,0.7);border:1px solid var(--border-strong);
+    -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  }
+  .switch button{
+    position:relative;z-index:2;border:none;background:none;cursor:pointer;white-space:nowrap;
+    font-family:inherit;font-size:clamp(11px,3vw,13px);font-weight:600;color:var(--text-secondary);
+    padding:9px clamp(12px,3.5vw,22px);border-radius:var(--radius-pill);transition:color .2s;
+  }
+  .switch button.active{color:#fff;}
+  .switch .thumb{
+    position:absolute;top:4px;left:4px;z-index:1;height:calc(100% - 8px);
+    border-radius:var(--radius-pill);
+    background:linear-gradient(to top,var(--accent-blue),#5a9bff);
+    border:1px solid rgba(59,130,246,0.8);
+    box-shadow:0 4px 16px -2px rgba(59,130,246,0.6);
+    transition:transform .35s cubic-bezier(.34,1.56,.64,1), width .35s cubic-bezier(.34,1.56,.64,1);
+  }
+  .switch .save-tag{
+    margin-left:6px;font-size:9px;font-weight:700;color:var(--accent-teal);
+    background:rgba(0,229,204,0.12);border:1px solid rgba(0,229,204,0.3);
+    border-radius:var(--radius-pill);padding:1px 6px;vertical-align:middle;white-space:nowrap;
+  }
+  .price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:stretch;}
+  .price-card{
+    position:relative;border-radius:16px;padding:28px 26px;display:flex;flex-direction:column;
+    background:linear-gradient(160deg,rgba(19,29,40,0.7),rgba(15,25,36,0.6));
+    -webkit-backdrop-filter:blur(18px) saturate(140%);backdrop-filter:blur(18px) saturate(140%);
+    border:1px solid var(--glass-border);
+    box-shadow:inset 0 1px 0 var(--glass-highlight),0 20px 50px -22px rgba(0,0,0,0.6);
+    transition:transform .2s,border-color .2s;
+  }
+  .price-card:hover{transform:translateY(-4px);border-color:var(--border-strong);}
+  .price-card.popular{
+    border-color:rgba(59,130,246,0.55);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.08),0 0 0 1px rgba(59,130,246,0.25),0 -6px 120px -20px rgba(9,0,255,0.65),0 30px 70px -25px rgba(0,0,0,0.7);
+    z-index:2;
+  }
+  .pop-badge{
+    position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+    background:linear-gradient(to top,var(--accent-blue),#5a9bff);
+    color:#fff;font-size:11px;font-weight:700;letter-spacing:.03em;
+    padding:5px 16px;border-radius:var(--radius-pill);white-space:nowrap;
+    box-shadow:0 6px 20px -6px rgba(59,130,246,0.8);
+  }
+  .price-name{font-size:clamp(21px,5vw,26px);font-weight:700;letter-spacing:-0.01em;margin-bottom:12px;}
+  .price-name .term{font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;display:block;margin-top:2px;}
+  .price-amount{display:flex;align-items:baseline;gap:2px;margin-bottom:6px;flex-wrap:wrap;}
+  .price-amount .cur{font-size:18px;font-weight:600;color:var(--text-secondary);}
+  .price-amount .val{font-size:clamp(32px,8vw,40px);font-weight:700;letter-spacing:-0.02em;font-variant-numeric:tabular-nums;line-height:1;}
+  .price-amount .per{font-size:14px;color:var(--text-secondary);margin-left:4px;}
+  .price-total{font-size:12px;color:var(--text-muted);margin-bottom:20px;}
+  .price-total b{color:var(--text-secondary);font-weight:600;font-variant-numeric:tabular-nums;}
+  .price-desc{font-size:13px;color:var(--text-secondary);margin-bottom:22px;min-height:40px;}
+  .price-btn{
+    display:block;width:100%;text-align:center;text-decoration:none;
+    padding:13px;border-radius:12px;font-size:15px;font-weight:600;font-family:inherit;
+    cursor:pointer;margin-bottom:22px;transition:all .15s;
+  }
+  .price-btn.solid{background:linear-gradient(to top,var(--accent-blue),#5a9bff);color:#fff;border:1px solid rgba(59,130,246,0.7);box-shadow:0 8px 24px -8px rgba(59,130,246,0.7);}
+  .price-btn.solid:hover{filter:brightness(1.08);}
+  .price-btn.outline{background:linear-gradient(to top,rgba(10,15,22,0.9),rgba(40,50,62,0.5));color:#fff;border:1px solid var(--border-strong);}
+  .price-btn.outline:hover{border-color:var(--accent-blue);}
+  .price-features{border-top:1px solid var(--border-default);padding-top:18px;margin-top:auto;}
+  .price-features h4{font-size:13px;font-weight:600;margin-bottom:14px;}
+  .price-features ul{list-style:none;display:flex;flex-direction:column;gap:11px;}
+  .price-features li{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-secondary);}
+  .price-features li .chk{
+    width:18px;height:18px;border-radius:50%;flex-shrink:0;display:grid;place-content:center;
+    background:rgba(0,229,204,0.12);color:var(--accent-teal);font-size:10px;font-weight:700;
+  }
+  .price-note{text-align:center;font-size:12px;color:var(--text-muted);margin-top:28px;}
+
+  /* ===== Mini formulário WhatsApp ===== */
+  .whats-form{max-width:420px;margin:0 auto;text-align:left;display:flex;flex-direction:column;gap:16px;}
+  .whats-field{display:flex;flex-direction:column;gap:6px;}
+  .whats-field label{font-size:12px;font-weight:600;color:var(--text-secondary);}
+  .whats-field input{
+    width:100%;padding:13px 16px;border-radius:10px;font-size:14px;font-family:inherit;
+    background:rgba(255,255,255,0.05);border:1px solid var(--border-strong);color:#fff;
+    -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);outline:none;transition:border-color .15s,background .15s;
+  }
+  .whats-field input::placeholder{color:var(--text-muted);}
+  .whats-field input:focus{border-color:var(--accent-teal);background:rgba(255,255,255,0.08);}
+  .whats-field input.field-error{border-color:var(--status-negative);}
+  .whats-submit{width:100%;justify-content:center;margin-top:4px;}
+  .whats-note{font-size:11px;color:var(--text-muted);text-align:center;margin-top:2px;}
+
+  /* ===== Responsive ===== */
+  @media (max-width:960px){
+    .price-grid{grid-template-columns:1fr;}
+    .price-card.popular{order:-1;}
+    .hero-grid{grid-template-columns:1fr;gap:40px;}
+    .c-4,.c-3,.c-2,.c-6{grid-column:span 6;}
+    .quotes{grid-template-columns:1fr;}
+    .kpi-band-grid{grid-template-columns:repeat(2,1fr);}
+    nav.menu{display:none;}
+    .nav-toggle{display:flex;}
+    section{padding:60px 0;}
+    .app-scroll-hint{display:flex;}
+  }
+
+  @media (max-width:760px){
+    .kpi-band-grid{grid-template-columns:1fr;}
+    .bento-hero{grid-template-columns:1fr;}
+    .bento-hero .span2{grid-column:span 1;}
+    .ui-tooltip{display:none;}
+    .footer-inner{justify-content:center;text-align:center;}
+    .quote-card p{font-size:13px;}
+  }
+
+  @media (max-width:480px){
+    .topbar-inner{height:56px;}
+    .btn-cta-top{display:none;}
+    .hero{padding:76px 0 56px;}
+    .eyebrow{font-size:10px;padding:5px 12px;}
+    .price-card{padding:24px 20px;}
+    .cell{padding:22px 20px;}
+    section{padding:48px 0;}
+    .section-head{margin-bottom:32px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== TOPBAR (glass flutuante) ===== -->
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">
+      <div class="logo-mark">L</div>
+      <span>Lex<em>Control</em></span>
+    </div>
+    <nav class="menu">
+      <a href="#produto">Produto</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#demo">Demonstração</a>
+      <a href="#depoimentos">Depoimentos</a>
+    </nav>
+    <a href="#demo" class="btn btn-primary btn-cta-top">Agendar demonstração</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Abrir menu"><span></span></button>
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="#produto">Produto</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#resultados">Resultados</a>
+      <a href="#demo">Demonstração</a>
+      <a href="#depoimentos">Depoimentos</a>
+      <a href="#demo" style="color:#fff;background:var(--accent-blue);text-align:center;margin-top:6px;font-weight:600;">Agendar demonstração</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="produto">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="glow g3"></div>
+  <div class="container hero-grid z1">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> 100% focado em operações ad exitum</div>
+      <h1>Tenha uma <span class="grad">visão estratégica</span> do financeiro da sua operação ad exitum</h1>
+      <p class="hero-sub">Quando o honorário depende do êxito, cada tese é um ativo. O LexControl transforma sua carteira de contratos ad exitum em uma operação previsível: projeção de honorários, probabilidade de êxito e fluxo de caixa em um só painel.</p>
+      <div class="hero-ctas">
+        <a href="#demo" class="btn btn-primary btn-lg">Agendar demonstração</a>
+      </div>
+    </div>
+
+    <!-- bento de vidro: mini dashboard -->
+    <div class="bento-hero" aria-hidden="true">
+      <div class="glass ui-card">
+        <div class="kpi-label">Total de alvarás</div>
+        <div class="kpi-value">R$ 2.091.500,03</div>
+        <div class="kpi-sub">446 processos</div>
+      </div>
+      <div class="glass ui-card">
+        <div class="kpi-label">Honorários da banca</div>
+        <div class="kpi-value">R$ 810.567,69</div>
+        <div class="kpi-sub">Taxa média: 0.4%</div>
+      </div>
+      <div class="glass-strong ui-card span2" style="position:relative;">
+        <div class="ui-card-header">
+          <div>
+            <div class="ui-card-title">Honorários por matéria</div>
+            <div class="ui-card-desc">Top 10 matérias por honorário recebido</div>
+          </div>
+          <span class="ui-badge blue">Top 10</span>
+        </div>
+        <div class="ui-card-content" style="position:relative;">
+          <!-- tooltip shadcn flutuante -->
+          <div class="ui-tooltip" style="top:2px;left:120px;">
+            <div class="tt-label">Seguro</div>
+            <div class="tt-row"><span><i class="tt-dot" style="background:#3B82F6"></i>Honorários</span><b>R$ 154k</b></div>
+          </div>
+          <svg class="chart-svg" viewBox="0 0 520 268" xmlns="http://www.w3.org/2000/svg">
+            <!-- gridlines verticais tracejadas -->
+            <g stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,3">
+              <line x1="112" y1="0"   x2="112" y2="246"/>
+              <line x1="209" y1="0"   x2="209" y2="246"/>
+              <line x1="306" y1="0"   x2="306" y2="246"/>
+              <line x1="403" y1="0"   x2="403" y2="246"/>
+              <line x1="500" y1="0"   x2="500" y2="246"/>
+            </g>
+            <!-- eixo -->
+            <line x1="112" y1="246" x2="500" y2="246" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+            <!-- barras -->
+            <g fill="#3B82F6">
+              <rect x="112" y="6"   width="373" height="16" rx="3"/>
+              <rect x="112" y="30"  width="233" height="16" rx="3"/>
+              <rect x="112" y="54"  width="177" height="16" rx="3"/>
+              <rect x="112" y="78"  width="160" height="16" rx="3"/>
+              <rect x="112" y="102" width="150" height="16" rx="3"/>
+              <rect x="112" y="126" width="138" height="16" rx="3"/>
+              <rect x="112" y="150" width="116" height="16" rx="3"/>
+              <rect x="112" y="174" width="104" height="16" rx="3"/>
+              <rect x="112" y="198" width="90"  height="16" rx="3"/>
+              <rect x="112" y="222" width="82"  height="16" rx="3"/>
+            </g>
+            <!-- rótulos das categorias -->
+            <g fill="#8A9BB0" font-size="10" text-anchor="end">
+              <text x="104" y="17">SEGURO</text>
+              <text x="104" y="41">MORA</text>
+              <text x="104" y="65">RCC</text>
+              <text x="104" y="89">SERVIÇOS DIGITAIS</text>
+              <text x="104" y="113">CESTA</text>
+              <text x="104" y="137">SERASA</text>
+              <text x="104" y="161">RMC</text>
+              <text x="104" y="185">TARIFA INDEVIDA</text>
+              <text x="104" y="209">ESPECÍFICA</text>
+              <text x="104" y="233">COBRANÇA INDEVIDA</text>
+            </g>
+            <!-- rótulos do eixo x -->
+            <g class="axis-label" fill="#5A6A7E" font-size="10">
+              <text x="112" y="260" text-anchor="middle">R$0</text>
+              <text x="209" y="260" text-anchor="middle">R$40K</text>
+              <text x="306" y="260" text-anchor="middle">R$80K</text>
+              <text x="403" y="260" text-anchor="middle">R$120K</text>
+              <text x="500" y="260" text-anchor="middle">R$160K</text>
+            </g>
+          </svg>
+        </div>
+        <div class="ui-card-footer">Seguro concentra <b>23%</b> dos honorários da carteira <span style="color:var(--accent-teal)">↗</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROBLEMA (bento 3) ===== -->
+<section class="relative">
+  <div class="glow" style="width:400px;height:340px;top:10%;left:-160px;background:rgba(167,139,250,0.10);"></div>
+  <div class="container z1">
+    <div class="section-head center">
+      <h2>Do problema à solução</h2>
+    </div>
+    <div class="bento">
+      <div class="cell glass c-2">
+        <div class="cell-icon">📉</div>
+        <h3>Receita imprevisível</h3>
+        <p>Entenda o fluxo de geração de caixa da sua operação ad exitum e tenha previsibilidade de receita.</p>
+      </div>
+      <div class="cell glass c-2">
+        <div class="cell-icon">🗂️</div>
+        <h3>Sem visão estratégica</h3>
+        <p>Enxergue dados estratégicos como tempo médio de tramitação, teses mais rentáveis, tipos de resolução (acordos ou condenação), comparativos de receitas mês a mês, entre outros.</p>
+      </div>
+      <div class="cell glass c-2">
+        <div class="cell-icon">⏱️</div>
+        <h3>Sem controle de pagamentos</h3>
+        <p>Entenda 100% das entradas do seu escritório, separando o que é receita da operação e o que é valor de clientes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RECURSOS (bento grande) ===== -->
+<section id="recursos" style="padding-top:0" class="relative">
+  <div class="glow" style="width:460px;height:380px;top:30%;right:-180px;background:rgba(59,130,246,0.13);"></div>
+  <div class="container z1">
+    <div class="section-head center">
+      <h2>Conheça um pouco dos indicadores do LexControl</h2>
+    </div>
+
+    <p class="app-scroll-hint">⟷ Arraste para o lado para ver o painel completo</p>
+    <div class="app-shot-scroll">
+    <div class="app-shot glass-strong">
+      <div class="browser-bar">
+        <div class="browser-dots"><span></span><span></span><span></span></div>
+        <div class="browser-url"><span>app.lexcontrol.com.br/dashboard</span></div>
+      </div>
+      <div class="app-shell">
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+          <div class="app-brand"><div class="mark">☁</div> LexFinance</div>
+          <div class="app-user">
+            <div class="app-user-top">
+              <div class="app-user-avatar">MP</div>
+              <span class="app-user-toggle">☀ ☾</span>
+            </div>
+            <div class="app-user-date">Terça-feira, 28 de julho</div>
+            <div class="app-user-welcome">Bem-vindo, Marcelo! <span style="margin-left:auto;color:var(--text-muted);">⌄</span></div>
+          </div>
+
+          <div class="app-nav-item active"><span class="ic">▦</span> Dashboard</div>
+          <div class="app-nav-item"><span class="ic">☑</span> Tarefas</div>
+          <div class="app-nav-item"><span class="ic">▤</span> Alvarás</div>
+          <div class="app-nav-item"><span class="ic">◍</span> Clientes</div>
+          <div class="app-nav-item"><span class="ic">▢</span> Processos</div>
+
+          <div class="app-nav-group">Configurações</div>
+          <div class="app-nav-item"><span class="ic">⚙</span> Usuários</div>
+          <div class="app-nav-item"><span class="ic">⇄</span> Fluxos</div>
+          <div class="app-nav-item"><span class="ic">◈</span> Matérias</div>
+          <div class="app-nav-item"><span class="ic">◎</span> Origens</div>
+
+          <div class="app-nav-group">Desenvolvedor</div>
+          <div class="app-nav-item"><span class="ic">▣</span> Companhias</div>
+          <div class="app-nav-item"><span class="ic">◫</span> Cargos</div>
+
+          <div class="app-sidebar-footer"><div class="app-logo-btn">Sua logo aqui</div></div>
+        </aside>
+
+        <!-- Main -->
+        <main class="app-main">
+          <div class="app-topbar-row">
+            <span class="app-filter-pill">📅 Todo o Período · 446 processos</span>
+            <span class="app-export-btn">⬇ Exportar Relatório</span>
+          </div>
+
+          <div class="app-kpi-grid">
+            <div class="app-kpi">
+              <div class="kpi-label">Total de alvarás</div>
+              <div class="kpi-value">R$ 2.091.500,03</div>
+              <div class="kpi-sub">446 processos</div>
+            </div>
+            <div class="app-kpi">
+              <div class="kpi-label">Honorários da banca</div>
+              <div class="kpi-value">R$ 810.567,69</div>
+              <div class="kpi-sub">Taxa média: 0.4%</div>
+            </div>
+            <div class="app-kpi">
+              <div class="kpi-label">Repasse aos clientes</div>
+              <div class="kpi-value">R$ 1.224.567,34</div>
+              <div class="kpi-sub">Média: R$ 2.745,67</div>
+            </div>
+            <div class="app-kpi">
+              <div class="kpi-label">Sucumbência total</div>
+              <div class="kpi-value">R$ 56.365,00</div>
+              <div class="kpi-sub">19 com sucumbência</div>
+            </div>
+          </div>
+
+          <div class="app-row cols-a">
+            <div class="app-panel">
+              <h4>Receita Mensal</h4>
+              <svg class="chart-svg" id="receitaMensalChart" viewBox="0 0 500 165" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"></svg>
+              <div class="app-legend-inline">
+                <span><i style="background:#3B82F6"></i> Honorários</span>
+                <span><i style="background:#00E5CC"></i> Repasse Clientes</span>
+              </div>
+            </div>
+            <div class="app-panel" style="display:flex;flex-direction:column;">
+              <h4>Tipo de Resolução</h4>
+              <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:20px;flex:1;margin-top:8px;">
+                <div class="pie-donut" style="background:conic-gradient(#A78BFA 0deg 262.8deg, #00E5CC 262.8deg 356.4deg, #EC4899 356.4deg 360deg);">
+                  <div class="pie-donut-center"><b>72.9%</b></div>
+                </div>
+                <div class="pie-legend">
+                  <div class="legend-item"><span class="swatch" style="background:#A78BFA"></span> Condenação <b>73%</b></div>
+                  <div class="legend-item"><span class="swatch" style="background:#00E5CC"></span> Acordo <b>26%</b></div>
+                  <div class="legend-item"><span class="swatch" style="background:#EC4899"></span> Multa <b>1%</b></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="app-row cols-b" style="margin-bottom:0;">
+            <div class="app-panel">
+              <h4>Processos por Matéria</h4>
+              <div class="sub">Top 8 matérias · 50 no total</div>
+              <div style="display:flex;flex-direction:column;justify-content:center;gap:16px;flex:1;">
+                <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+                  <div class="pie-donut" style="border-radius:50%;background:conic-gradient(#3B82F6 0deg 76.68deg, #00E5CC 76.68deg 109.76deg, #A78BFA 109.76deg 140.43deg, #F59E0B 140.43deg 169.48deg, #22D3EE 169.48deg 193.71deg, #84CC16 193.71deg 212.29deg, #EC4899 212.29deg 228.42deg, #7C6EF6 228.42deg 240.52deg, #5A6A7E 240.52deg 360deg);"></div>
+                </div>
+                <div class="pie-legend-grid" style="margin-top:0;">
+                  <div class="li"><span class="swatch" style="background:#3B82F6"></span> Seguro <b>95</b></div>
+                  <div class="li"><span class="swatch" style="background:#00E5CC"></span> Cesta <b>41</b></div>
+                  <div class="li"><span class="swatch" style="background:#A78BFA"></span> Serviços digitais <b>38</b></div>
+                  <div class="li"><span class="swatch" style="background:#F59E0B"></span> Tarifa indevida <b>36</b></div>
+                  <div class="li"><span class="swatch" style="background:#22D3EE"></span> Serasa <b>30</b></div>
+                  <div class="li"><span class="swatch" style="background:#84CC16"></span> Específica <b>23</b></div>
+                  <div class="li"><span class="swatch" style="background:#EC4899"></span> RCC <b>20</b></div>
+                  <div class="li"><span class="swatch" style="background:#7C6EF6"></span> Dano moral <b>15</b></div>
+                  <div class="li full"><span class="swatch" style="background:#5A6A7E"></span> Outros (42) <b>148</b></div>
+                </div>
+              </div>
+            </div>
+            <div class="app-panel">
+              <h4>Honorários por Matéria</h4>
+              <div class="sub">Top 10</div>
+              <svg class="chart-svg" viewBox="0 0 520 268" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                <g stroke="rgba(255,255,255,0.08)" stroke-width="1" stroke-dasharray="3,3">
+                  <line x1="112" y1="0"   x2="112" y2="246"/>
+                  <line x1="209" y1="0"   x2="209" y2="246"/>
+                  <line x1="306" y1="0"   x2="306" y2="246"/>
+                  <line x1="403" y1="0"   x2="403" y2="246"/>
+                  <line x1="500" y1="0"   x2="500" y2="246"/>
+                </g>
+                <line x1="112" y1="246" x2="500" y2="246" stroke="rgba(255,255,255,0.14)" stroke-width="1"/>
+                <g fill="#3B82F6">
+                  <rect x="112" y="6"   width="373" height="16" rx="3"/>
+                  <rect x="112" y="30"  width="233" height="16" rx="3"/>
+                  <rect x="112" y="54"  width="177" height="16" rx="3"/>
+                  <rect x="112" y="78"  width="160" height="16" rx="3"/>
+                  <rect x="112" y="102" width="150" height="16" rx="3"/>
+                  <rect x="112" y="126" width="138" height="16" rx="3"/>
+                  <rect x="112" y="150" width="116" height="16" rx="3"/>
+                  <rect x="112" y="174" width="104" height="16" rx="3"/>
+                  <rect x="112" y="198" width="90"  height="16" rx="3"/>
+                  <rect x="112" y="222" width="82"  height="16" rx="3"/>
+                </g>
+                <g fill="#8A9BB0" font-size="10" text-anchor="end">
+                  <text x="104" y="17">SEGURO</text>
+                  <text x="104" y="41">MORA</text>
+                  <text x="104" y="65">RCC</text>
+                  <text x="104" y="89">SERVIÇOS DIGITAIS</text>
+                  <text x="104" y="113">CESTA</text>
+                  <text x="104" y="137">SERASA</text>
+                  <text x="104" y="161">RMC</text>
+                  <text x="104" y="185">TARIFA INDEVIDA</text>
+                  <text x="104" y="209">ESPECÍFICA</text>
+                  <text x="104" y="233">COBRANÇA INDEVIDA</text>
+                </g>
+                <g class="axis-label" fill="#5A6A7E" font-size="10">
+                  <text x="112" y="260" text-anchor="middle">R$0</text>
+                  <text x="209" y="260" text-anchor="middle">R$40K</text>
+                  <text x="306" y="260" text-anchor="middle">R$80K</text>
+                  <text x="403" y="260" text-anchor="middle">R$120K</text>
+                  <text x="500" y="260" text-anchor="middle">R$160K</text>
+                </g>
+              </svg>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== KPI BAND (glass bento) ===== -->
+<div class="kpi-band" id="resultados">
+  <div class="container">
+    <div class="kpi-band-grid">
+      <div class="band-kpi glass"><b>+96%</b><span>NPS</span></div>
+      <div class="band-kpi glass"><b>9 em 10</b><span>usuários recomendam o LexControl</span></div>
+      <div class="band-kpi glass"><b>100%</b><span>de redução de erros nos lançamentos</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== DEPOIMENTOS ===== -->
+<section id="depoimentos" class="relative">
+  <div class="glow" style="width:380px;height:320px;top:20%;left:-140px;background:rgba(0,229,204,0.09);"></div>
+  <div class="container z1">
+    <div class="section-head center">
+      <div class="section-eyebrow">Depoimentos</div>
+      <h2>Quem opera no êxito, confia no LexControl</h2>
+    </div>
+    <div class="quotes">
+      <div class="quote-card glass">
+        <div class="stars">★★★★★</div>
+        <p>"Pela primeira vez conseguimos ter uma visão estratégica do financeiro da nossa operação de consumidor e entender como poderíamos otimizar os nossos esforços comerciais para focar nas teses que mais trazem receita."</p>
+        <div class="quote-who">
+          <div class="avatar" style="background:linear-gradient(135deg,#00E5CC,#3B82F6)">LA</div>
+          <div><b>Luis Albert</b><span>Sócio, operação de consumidor</span></div>
+        </div>
+      </div>
+      <div class="quote-card glass">
+        <div class="stars">★★★★★</div>
+        <p>"No primeiro semestre de 2026, aumentamos o faturamento da nossa operação em 82% somente com um insight extraído do LexControl. Percebemos que uma das teses que estávamos trabalhando era responsável por 40% da nossa receita, porém no comercial representava apenas 10% dos fechamentos. Com base nesse dado, alteramos os incentivos do time comercial — o que resultou nesse aumento expressivo de receita."</p>
+        <div class="quote-who">
+          <div class="avatar" style="background:linear-gradient(135deg,#A78BFA,#3B82F6)">NG</div>
+          <div><b>Nicolas Gomes</b><span>Sócio-diretor comercial</span></div>
+        </div>
+      </div>
+      <div class="quote-card glass">
+        <div class="stars">★★★★★</div>
+        <p>"Durante anos, fizemos a nossa gestão com base no que sobrava na conta, sem nunca saber o que era realmente receita do escritório e o que era parte do cliente. Depois do LexControl, passamos a ter uma visão estratégica dos nossos dados financeiros."</p>
+        <div class="quote-who">
+          <div class="avatar" style="background:linear-gradient(135deg,#F59E0B,#EC4899)">BB</div>
+          <div><b>Barros &amp; Brasil</b><span>Escritório de advocacia</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA DEMONSTRAÇÃO (mini formulário) ===== -->
+<section id="demo">
+  <div class="container">
+    <div class="cta-final glass-strong">
+      <div class="glow g1"></div>
+      <div class="z1">
+        <div class="section-eyebrow">Acesso sob demonstração</div>
+        <h2>Quanto vale a inteligência financeira que sua operação ainda não enxerga?</h2>
+        <p>Preencha seus dados e fale agora mesmo com um especialista pelo WhatsApp para agendar sua demonstração gratuita de 30 minutos.</p>
+        <form id="whatsForm" class="whats-form" novalidate>
+          <div class="whats-field">
+            <label for="whatsNome">Nome completo</label>
+            <input type="text" id="whatsNome" name="nome" placeholder="Digite seu nome completo" autocomplete="name" required>
+          </div>
+          <div class="whats-field">
+            <label for="whatsNumero">WhatsApp com DDD</label>
+            <input type="tel" id="whatsNumero" name="whatsapp" placeholder="(00) 00000-0000" autocomplete="tel" inputmode="numeric" required>
+          </div>
+          <button type="submit" class="btn btn-teal btn-lg whats-submit">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.9 1-.2.2-.3.2-.6.1-.2-.1-1-.4-1.9-1.2-.7-.6-1.2-1.4-1.3-1.7-.1-.2 0-.4.1-.5l.4-.5c.1-.2.2-.3.1-.5-.1-.2-.6-1.5-.8-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.4.1-.6.3-.2.2-.8.8-.8 1.9 0 1.1.8 2.2 1 2.4.1.2 1.7 2.6 4.1 3.6 2 .8 2.4.7 2.8.6.4-.1 1.3-.5 1.5-1 .2-.5.2-.9.1-1zM12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.7 1.5 5.2L2 22l4.9-1.3c1.4.8 3.1 1.2 4.9 1.2h.1c5.5 0 10-4.5 10-10S17.5 2 12 2z"/></svg>
+            Continuar no WhatsApp
+          </button>
+          <p class="whats-note">Ao continuar, você será redirecionado(a) para o WhatsApp do LexControl.</p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container footer-inner">
+    <div class="logo" style="font-size:14px">
+      <div class="logo-mark" style="width:24px;height:24px;font-size:11px">L</div>
+      <span>Lex<em>Control</em></span>
+    </div>
+    <div class="footer-links">
+      <a href="#produto">Produto</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#demo">Demonstração</a>
+      <a href="#">Privacidade</a>
+    </div>
+    <p>© 2026 LexControl. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var toggle = document.getElementById('navToggle');
+  var menu = document.getElementById('mobileMenu');
+  if(!toggle || !menu) return;
+  toggle.addEventListener('click', function(){
+    menu.classList.toggle('open');
+  });
+  menu.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ menu.classList.remove('open'); });
+  });
+  document.addEventListener('click', function(e){
+    if(!menu.contains(e.target) && !toggle.contains(e.target)){
+      menu.classList.remove('open');
+    }
+  });
+})();
+</script>
+
+<script>
+(function(){
+  var sw = document.getElementById('priceSwitch');
+  if(!sw) return;
+  var thumb = document.getElementById('switchThumb');
+  var btns = sw.querySelectorAll('button');
+  var vals = document.querySelectorAll('.price-card .val');
+  var pers = document.querySelectorAll('.price-card [data-per]');
+  var mode = 'month';
+
+  function fmt(n){ return Math.round(n).toLocaleString('pt-BR'); }
+
+  function positionThumb(){
+    var active = sw.querySelector('button.active');
+    thumb.style.width = active.offsetWidth + 'px';
+    thumb.style.transform = 'translateX(' + (active.offsetLeft - 4) + 'px)';
+  }
+
+  function animateValue(el, to){
+    var from = parseFloat(el.getAttribute('data-current')) || parseFloat(el.textContent.replace(/\./g,'')) || 0;
+    var start = performance.now(), dur = 500;
+    function step(now){
+      var t = Math.min((now - start)/dur, 1);
+      var e = 1 - Math.pow(1 - t, 3); // easeOutCubic
+      var cur = from + (to - from) * e;
+      el.textContent = fmt(cur);
+      if(t < 1) requestAnimationFrame(step);
+      else { el.textContent = fmt(to); el.setAttribute('data-current', to); }
+    }
+    requestAnimationFrame(step);
+  }
+
+  function setMode(m){
+    mode = m;
+    vals.forEach(function(el){
+      animateValue(el, parseFloat(el.getAttribute(m === 'month' ? 'data-month' : 'data-total')));
+    });
+    pers.forEach(function(el){ el.textContent = m === 'month' ? '/mês' : ' total'; });
+  }
+
+  btns.forEach(function(b){
+    b.addEventListener('click', function(){
+      btns.forEach(function(x){ x.classList.remove('active'); });
+      b.classList.add('active');
+      positionThumb();
+      setMode(b.getAttribute('data-mode'));
+    });
+  });
+
+  window.addEventListener('load', positionThumb);
+  window.addEventListener('resize', positionThumb);
+  positionThumb();
+})();
+</script>
+
+<script>
+(function(){
+  var svg = document.getElementById('receitaMensalChart');
+  if(!svg) return;
+  var ns = 'http://www.w3.org/2000/svg';
+  var n = 80; // meses: 2019/10 até 2026/05
+  var slot = 5.5, barW = 2, barGap = 0.5;
+  var chartTop = 8, chartBottom = 118, chartH = chartBottom - chartTop, maxVal = 180000;
+  var chartWidth = n*slot;
+  var yAxisW = 34; // espaço reservado à esquerda para os rótulos do eixo Y
+
+  function y(v){ return chartBottom - (v/maxVal)*chartH; }
+
+  // gridlines + eixo Y
+  [0,45000,90000,135000,180000].forEach(function(v){
+    var line = document.createElementNS(ns,'line');
+    line.setAttribute('x1',0); line.setAttribute('x2', chartWidth);
+    line.setAttribute('y1', y(v)); line.setAttribute('y2', y(v));
+    line.setAttribute('stroke','rgba(255,255,255,0.06)');
+    svg.appendChild(line);
+    var label = document.createElementNS(ns,'text');
+    label.setAttribute('x', -6); label.setAttribute('y', y(v)+3);
+    label.setAttribute('text-anchor','end');
+    label.setAttribute('font-size','8.5'); label.setAttribute('fill','#5A6A7E');
+    label.textContent = v===0 ? 'R$0' : 'R$' + (v/1000) + 'K';
+    svg.appendChild(label);
+  });
+  svg.setAttribute('viewBox', (-yAxisW)+' 0 '+ (chartWidth+yAxisW+6) +' 150');
+
+  var labelIdx = {0:'2019/10',22:'2021/08',45:'2023/07',53:'2024/03',56:'2024/06',62:'2024/12',65:'2025/03',68:'2025/06',71:'2025/09',74:'2025/12',79:'2026/05'};
+  var shownIdx = [0,22,45,62,79]; // subconjunto legível dos meses acima, sem sobreposição de texto
+
+  for(var i=0;i<n;i++){
+    var t = Math.max(0, i-40)/39;
+    var honor = 3500 + Math.pow(t,1.7)*158000 + (i%5)*1300;
+    var repasse = 2800 + Math.pow(t,1.7)*128000 + (i%4)*1100;
+    honor = Math.min(honor, maxVal-2000);
+    repasse = Math.min(repasse, maxVal-4000);
+
+    var x = i*slot;
+    var rh = document.createElementNS(ns,'rect');
+    rh.setAttribute('x', x); rh.setAttribute('y', y(honor));
+    rh.setAttribute('width', barW); rh.setAttribute('height', chartBottom - y(honor));
+    rh.setAttribute('rx', 0.6); rh.setAttribute('fill', '#3B82F6');
+    svg.appendChild(rh);
+
+    var rr = document.createElementNS(ns,'rect');
+    rr.setAttribute('x', x+barW+barGap); rr.setAttribute('y', y(repasse));
+    rr.setAttribute('width', barW); rr.setAttribute('height', chartBottom - y(repasse));
+    rr.setAttribute('rx', 0.6); rr.setAttribute('fill', '#00E5CC');
+    svg.appendChild(rr);
+
+    if(shownIdx.indexOf(i) !== -1){
+      var tick = document.createElementNS(ns,'line');
+      tick.setAttribute('x1', x); tick.setAttribute('x2', x);
+      tick.setAttribute('y1', chartBottom); tick.setAttribute('y2', chartBottom+3);
+      tick.setAttribute('stroke','#5A6A7E');
+      svg.appendChild(tick);
+
+      var lbl = document.createElementNS(ns,'text');
+      lbl.setAttribute('x', x); lbl.setAttribute('y', chartBottom+13);
+      lbl.setAttribute('text-anchor', i===0 ? 'start' : (i===79 ? 'end' : 'middle'));
+      lbl.setAttribute('font-size','8.5'); lbl.setAttribute('fill','#5A6A7E');
+      lbl.textContent = labelIdx[i];
+      svg.appendChild(lbl);
+    }
+  }
+})();
+</script>
+
+<!-- Formulário -> redirecionamento WhatsApp -->
+<script>
+(function(){
+  var form = document.getElementById('whatsForm');
+  if(!form) return;
+  var nomeInput = document.getElementById('whatsNome');
+  var numInput = document.getElementById('whatsNumero');
+  var WHATS_PHONE = '5592995060144';
+
+  numInput.addEventListener('input', function(){
+    var d = numInput.value.replace(/\D/g,'').slice(0,11);
+    var out = d;
+    if(d.length > 2) out = '(' + d.slice(0,2) + ') ' + d.slice(2);
+    if(d.length > 7) out = '(' + d.slice(0,2) + ') ' + d.slice(2,7) + '-' + d.slice(7);
+    numInput.value = out;
+  });
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var nome = nomeInput.value.trim();
+    var numeroDigits = numInput.value.replace(/\D/g,'');
+    var ok = true;
+
+    if(nome.length < 2){ nomeInput.classList.add('field-error'); ok = false; } else { nomeInput.classList.remove('field-error'); }
+    if(numeroDigits.length < 10){ numInput.classList.add('field-error'); ok = false; } else { numInput.classList.remove('field-error'); }
+    if(!ok) return;
+
+    var mensagem = 'Olá! Me chamo ' + nome + ' (WhatsApp: ' + numInput.value + '). Gostaria de saber mais sobre o LexControl.';
+    var url = 'https://api.whatsapp.com/send?phone=' + WHATS_PHONE + '&text=' + encodeURIComponent(mensagem);
+    window.location.href = url;
+  });
+})();
+</script>
+
+</body>
+</html>
