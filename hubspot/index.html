@@ -1220,7 +1220,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
 
   var WHATS_PHONE = '5592995060144';
   var HUBSPOT_ENDPOINT = 'https://api.hsforms.com/submissions/v3/integration/submit/51839348/af5b12db-a9a2-4e76-9eed-98a3dfc8bb13';
-  var state = { nome:'', numeroDigits:'', started:false };
+  var state = { nome:'', email:'', numeroDigits:'', started:false };
 
   function hourGreeting(){
     var h = new Date().getHours();
@@ -1312,9 +1312,36 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
         {text:'Perfeito', avatar:false},
         {text:escapeHtml(v), avatar:false},
         {text:'.', avatar:false}
-      ], stepPhone);
+      ], stepEmail);
     }
     wrap.querySelector('#chatNomeSend').addEventListener('click', submit);
+    input.addEventListener('keydown', function(e){ if(e.key === 'Enter') submit(); });
+  }
+
+  function stepEmail(){
+    playSequence([
+      {text:'Agora preciso do seu melhor e-mail para contato.', avatar:true}
+    ], attachEmailInput);
+  }
+
+  function attachEmailInput(){
+    var wrap = document.createElement('div');
+    wrap.className = 'chat-input-row';
+    wrap.innerHTML = '<input type="email" class="chat-input" id="chatEmailInput" placeholder="seu@email.com" autocomplete="email" inputmode="email">' +
+      '<button class="chat-send" id="chatEmailSend" type="button" aria-label="Enviar">' + sendIcon() + '</button>';
+    addNode(wrap);
+    var input = wrap.querySelector('#chatEmailInput');
+    input.focus();
+
+    function submit(){
+      var v = input.value.trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ input.style.borderColor = '#F87171'; return; }
+      state.email = v;
+      clearInputArea(wrap);
+      addUserMessage(v);
+      stepPhone();
+    }
+    wrap.querySelector('#chatEmailSend').addEventListener('click', submit);
     input.addEventListener('keydown', function(e){ if(e.key === 'Enter') submit(); });
   }
 
@@ -1389,8 +1416,15 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       {text:escapeHtml(state.nome), avatar:false},
       {text:', já tenho todas as respostas que preciso, em breve um de nossos especialistas entrará em contato com você para agendar uma reunião para demonstração do Lex Control 🎉', avatar:false}
     ], function(){
-      enviarParaHubSpot();
-      setTimeout(redirectWhats, 1500);
+      enviarParaHubSpot()
+        .then(function(){
+          console.log('Lead enviado ao HubSpot');
+          redirectWhats();
+        })
+        .catch(function(error){
+          console.error('Erro do HubSpot:', error);
+          redirectWhats();
+        });
     });
   }
 
@@ -1418,6 +1452,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   function enviarParaHubSpot(){
     var fields = [
       { name: 'firstname', value: state.nome },
+      { name: 'email', value: state.email },
       { name: 'phone', value: '+55' + state.numeroDigits },
       { name: 'utm_source', value: getUtm('utm_source') },
       { name: 'utm_medium', value: getUtm('utm_medium') },
@@ -1434,16 +1469,17 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     var hutk = getCookie('hubspotutk');
     if(hutk){ context.hutk = hutk; }
 
-    fetch(HUBSPOT_ENDPOINT, {
+    return fetch(HUBSPOT_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ submittedAt: Date.now(), fields: fields, context: context }),
-      keepalive: true
-    }).then(function(res){
-      if(!res.ok){
-        return res.text().then(function(t){ console.warn('Erro ao enviar lead para o HubSpot:', t); });
+      body: JSON.stringify({ submittedAt: Date.now(), fields: fields, context: context })
+    }).then(async function(response){
+      if(!response.ok){
+        var error = await response.text();
+        throw new Error(error);
       }
-    }).catch(function(err){ console.warn('Falha ao enviar lead para o HubSpot:', err); });
+      return response.json();
+    });
   }
 
   function openOverlay(){ overlay.classList.add('open'); }
@@ -1469,6 +1505,9 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   overlay.addEventListener('click', function(e){ if(e.target === overlay) closeOverlay(); });
 })();
 </script>
+
+<!-- Rastreamento HubSpot: gera o cookie hubspotutk e melhora a atribuição de campanhas -->
+<script type="text/javascript" id="hs-script-loader" async defer src="https://js.hs-scripts.com/51839348.js"></script>
 
 </body>
 </html>
