@@ -1482,7 +1482,16 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
             utm_term: utms.utm_term,
             utm_id: utms.utm_id
           }
-        }]
+        }],
+        // Dados do cliente sem hash, para uso do proprio webhook (ex: CRM),
+        // separados do bloco "data" acima que segue o formato exigido pela Meta.
+        raw_customer_data: {
+          first_name: firstName,
+          last_name: lastName,
+          full_name: state.nome,
+          phone: '+' + phoneE164,
+          country: 'BR'
+        }
       };
 
       if(META_TRACKING_WEBHOOK.indexOf('SEU-WEBHOOK-AQUI') !== -1){
