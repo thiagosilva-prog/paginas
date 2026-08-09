@@ -1395,8 +1395,8 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   }
 
   function redirectWhats(){
-    var mensagem = 'Olá! Me chamo ' + state.nome + ' (WhatsApp: +55' + state.numeroDigits + '). Gostaria de saber mais sobre o LexControl.';
-    var url = 'https://api.whatsapp.com/send?phone=' + WHATS_PHONE + '&text=' + encodeURIComponent(mensagem);
+    var mensagem = 'Gostaria de saber mais sobre LexControl.';
+    var url = 'https://wa.me/' + WHATS_PHONE + '?text=' + encodeURIComponent(mensagem);
     window.location.href = url;
   }
 
