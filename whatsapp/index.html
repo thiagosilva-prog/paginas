@@ -1220,7 +1220,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
 
   var WHATS_PHONE = '5592995060144';
   var META_TRACKING_WEBHOOK = 'https://trigger.3sgroup.tech/webhook/lexcontrolapi';
-  var state = { nome:'', numeroDigits:'', started:false };
+  var state = { nome:'', email:'', numeroDigits:'', started:false };
 
   function hourGreeting(){
     var h = new Date().getHours();
@@ -1312,9 +1312,36 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
         {text:'Perfeito', avatar:false},
         {text:escapeHtml(v), avatar:false},
         {text:'.', avatar:false}
-      ], stepPhone);
+      ], stepEmail);
     }
     wrap.querySelector('#chatNomeSend').addEventListener('click', submit);
+    input.addEventListener('keydown', function(e){ if(e.key === 'Enter') submit(); });
+  }
+
+  function stepEmail(){
+    playSequence([
+      {text:'Agora preciso do seu melhor e-mail para contato.', avatar:true}
+    ], attachEmailInput);
+  }
+
+  function attachEmailInput(){
+    var wrap = document.createElement('div');
+    wrap.className = 'chat-input-row';
+    wrap.innerHTML = '<input type="email" class="chat-input" id="chatEmailInput" placeholder="seu@email.com" autocomplete="email" inputmode="email">' +
+      '<button class="chat-send" id="chatEmailSend" type="button" aria-label="Enviar">' + sendIcon() + '</button>';
+    addNode(wrap);
+    var input = wrap.querySelector('#chatEmailInput');
+    input.focus();
+
+    function submit(){
+      var v = input.value.trim();
+      if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){ input.style.borderColor = '#F87171'; return; }
+      state.email = v;
+      clearInputArea(wrap);
+      addUserMessage(v);
+      stepPhone();
+    }
+    wrap.querySelector('#chatEmailSend').addEventListener('click', submit);
     input.addEventListener('keydown', function(e){ if(e.key === 'Enter') submit(); });
   }
 
@@ -1453,7 +1480,8 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       sha256Hex(normalize(firstName)),
       sha256Hex(normalize(lastName)),
       sha256Hex(phoneE164),
-      sha256Hex('br')
+      sha256Hex('br'),
+      sha256Hex(normalize(state.email))
     ]).then(function(hashes){
       var payload = {
         data: [{
@@ -1467,6 +1495,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
             fn: [hashes[0]],
             ln: [hashes[1]],
             country: [hashes[3]],
+            em: [hashes[4]],
             external_id: [getExternalId()],
             // client_ip_address não é confiável via JS; o webhook (n8n) deve capturá-lo
             // a partir do próprio request que recebe este POST.
@@ -1489,6 +1518,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
           first_name: firstName,
           last_name: lastName,
           full_name: state.nome,
+          email: state.email,
           phone: '+' + phoneE164,
           country: 'BR'
         }
