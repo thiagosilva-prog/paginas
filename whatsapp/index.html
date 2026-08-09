@@ -1219,8 +1219,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   if(!overlay || !body || !closeBtn) return;
 
   var WHATS_PHONE = '5592995060144';
-  // TODO: troque pela URL real do seu webhook (ex: n8n) que recebe este payload e reenvia pra Meta.
-  var META_TRACKING_WEBHOOK = 'https://SEU-WEBHOOK-AQUI.exemplo.com/meta-capi';
+  var META_TRACKING_WEBHOOK = 'https://trigger.3sgroup.tech/webhook/lexcontrolapi';
   var state = { nome:'', numeroDigits:'', started:false };
 
   function hourGreeting(){
