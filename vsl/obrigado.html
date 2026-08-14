@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex,nofollow">
+<title>Pagamento confirmado — LexControl</title>
+<style>
+  :root{
+    --bg-app:#0C111A;
+    --text-primary:#FFFFFF;
+    --text-secondary:#8A9BB0;
+    --accent-teal:#00E5CC;
+    --accent-blue:#3B82F6;
+    --border-strong:rgba(255,255,255,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg-app);color:var(--text-primary);
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    text-align:center;padding:24px;
+  }
+  .card{max-width:420px;}
+  .check{
+    width:64px;height:64px;border-radius:50%;margin:0 auto 24px;
+    background:rgba(0,229,204,0.12);border:1px solid rgba(0,229,204,0.3);
+    display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--accent-teal);
+  }
+  h1{font-size:22px;font-weight:700;margin-bottom:12px;letter-spacing:-0.01em;}
+  p{font-size:14px;color:var(--text-secondary);line-height:1.6;margin-bottom:28px;}
+  .spinner{
+    width:18px;height:18px;border-radius:50%;
+    border:2px solid rgba(255,255,255,0.15);border-top-color:var(--accent-teal);
+    margin:0 auto 20px;animation:spin .8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--accent-teal);color:#0C111A;text-decoration:none;
+    font-weight:600;font-size:14px;padding:13px 24px;border-radius:10px;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="check">✓</div>
+    <h1>Pagamento confirmado!</h1>
+    <div class="spinner"></div>
+    <p>Estamos te redirecionando para o WhatsApp para concluirmos a liberação da sua conta.<br>Se não abrir automaticamente, toque no botão abaixo.</p>
+    <a href="#" id="waLink" class="btn">Continuar no WhatsApp</a>
+  </div>
+
+<script>
+(function(){
+  var WHATS_PHONE = '5592995060144';
+
+  var PLAN_NAMES = {
+    mensal: 'Mensal',
+    semestral: 'Semestral',
+    anual: 'Anual'
+  };
+
+  var params = new URLSearchParams(window.location.search);
+  var planKey = (params.get('plano') || '').toLowerCase();
+  var planName = PLAN_NAMES[planKey] || 'contratado';
+
+  var mensagem = 'Olá! Acabei de finalizar minha assinatura do LexControl (plano ' + planName + '). Segue meu comprovante de pagamento para liberação da minha conta.';
+  var url = 'https://wa.me/' + WHATS_PHONE + '?text=' + encodeURIComponent(mensagem);
+
+  document.getElementById('waLink').href = url;
+
+  setTimeout(function(){
+    window.location.href = url;
+  }, 1200);
+})();
+</script>
+</body>
+</html>
