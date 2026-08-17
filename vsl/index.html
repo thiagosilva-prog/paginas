@@ -644,7 +644,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       </div>
     </div>
     <div style="text-align:center;margin-top:32px;">
-      <a href="#precos" class="btn btn-primary btn-lg">Ver planos e preços</a>
+      <a href="#precos" id="verPlanosBtn" class="btn btn-primary btn-lg">Ver planos e preços</a>
     </div>
   </div>
 </section>
@@ -1203,6 +1203,17 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       setTimeout(function(){ window.location.href = href; }, 200);
     });
   });
+
+  var verPlanosBtn = document.getElementById('verPlanosBtn');
+  if(verPlanosBtn){
+    verPlanosBtn.addEventListener('click', function(){
+      if(typeof fbq !== 'function') return;
+      fbq('track', 'InitiateCheckout', {
+        content_name: 'LexControl - Ver planos',
+        currency: 'BRL'
+      });
+    });
+  }
 })();
 </script>
 
