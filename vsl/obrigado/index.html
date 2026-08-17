@@ -131,12 +131,17 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   }
 
   if(typeof fbq === 'function'){
-    fbq('track', 'Purchase', {
+    var purchaseData = {
       value: info ? info.value : 0,
       currency: 'BRL',
       content_name: info ? ('LexControl - ' + plano) : 'LexControl',
       content_category: plano || 'desconhecido'
-    });
+    };
+    if(sessionId){
+      fbq('track', 'Purchase', purchaseData, { eventID: sessionId });
+    } else {
+      fbq('track', 'Purchase', purchaseData);
+    }
   }
 
   var planName = info ? info.label : 'LexControl';
