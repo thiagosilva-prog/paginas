@@ -1167,5 +1167,44 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
 })();
 </script>
 
+<!-- ===== Meta Pixel: InitiateCheckout + repasse de UTMs ao clicar em "Quero contratar" ===== -->
+<script>
+(function(){
+  var VALUES = { mensal: 497, semestral: 2382, anual: 3564 };
+  var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
+
+  // A Stripe repassa esses parametros para a URL de redirecionamento pos-pagamento
+  // automaticamente, desde que o link de pagamento use redirect customizado (o nosso usa).
+  function appendUtms(url){
+    var pageParams = new URLSearchParams(window.location.search);
+    var extra = new URLSearchParams();
+    UTM_KEYS.forEach(function(key){
+      var val = pageParams.get(key);
+      if(val) extra.set(key, val);
+    });
+    var qs = extra.toString();
+    if(!qs) return url;
+    return url + (url.indexOf('?') === -1 ? '?' : '&') + qs;
+  }
+
+  document.querySelectorAll('.price-btn[data-stripe-plan]').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      var href = appendUtms(btn.getAttribute('href'));
+      btn.setAttribute('href', href);
+      if(typeof fbq !== 'function') return; // sem pixel, navega normalmente (ja com os UTMs)
+      e.preventDefault();
+      var plan = btn.getAttribute('data-stripe-plan');
+      fbq('track', 'InitiateCheckout', {
+        content_name: 'LexControl - ' + plan,
+        content_category: plan,
+        value: VALUES[plan] || 0,
+        currency: 'BRL'
+      });
+      setTimeout(function(){ window.location.href = href; }, 200);
+    });
+  });
+})();
+</script>
+
 </body>
 </html>
