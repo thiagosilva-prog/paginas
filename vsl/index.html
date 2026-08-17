@@ -168,6 +168,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   /* ===== VSL ===== */
   .vsl-section{padding:40px 0 24px;}
   #vturb-player{border-radius:12px;overflow:hidden;background:#0A0E15;border:1px solid var(--border-default);}
+  .hide{display:none;}
 
   /* ===== Hero ===== */
   .hero{position:relative;padding:96px 0 72px;overflow:visible;}
@@ -615,6 +616,9 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   </div>
 </section>
 
+<!-- ===== RESTANTE DA PÁGINA (revelado após 10:04 de VSL) ===== -->
+<div id="post-vsl-content" class="hide">
+
 <!-- ===== PROBLEMA (bento 3) ===== -->
 <section class="relative">
   <div class="glow" style="width:400px;height:340px;top:10%;left:-160px;background:rgba(167,139,250,0.10);"></div>
@@ -985,6 +989,9 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   </div>
 </footer>
 
+</div>
+<!-- ===== /RESTANTE DA PÁGINA ===== -->
+
 <script>
 (function(){
   var toggle = document.getElementById('navToggle');
@@ -1125,6 +1132,37 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       lbl.textContent = labelIdx[i];
       svg.appendChild(lbl);
     }
+  }
+})();
+</script>
+
+<!-- ===== Revela o restante da página apenas após 10:04 de VSL ===== -->
+<script>
+(function(){
+  var DELAY_SECONDS = 604; // 10:04
+  var revealed = false;
+
+  document.addEventListener('player:ready', function(event){
+    if(revealed) return;
+    var detail = event.detail || {};
+    var player = detail.player || document.querySelector('vturb-smartplayer');
+    if(!player || typeof player.displayHiddenElements !== 'function') return;
+    revealed = true;
+    player.displayHiddenElements(DELAY_SECONDS, ['.hide'], { persist: true });
+  });
+
+  // Assim que o conteúdo for revelado, recalcula elementos que dependem de
+  // layout (ex.: a bolinha do switch de preços, que mediu offsetWidth=0
+  // enquanto a seção estava com display:none).
+  var target = document.getElementById('post-vsl-content');
+  if(target){
+    var mo = new MutationObserver(function(){
+      if(getComputedStyle(target).display !== 'none'){
+        window.dispatchEvent(new Event('resize'));
+        mo.disconnect();
+      }
+    });
+    mo.observe(target, { attributes: true, attributeFilter: ['class','style'] });
   }
 })();
 </script>
