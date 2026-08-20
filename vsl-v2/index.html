@@ -754,41 +754,6 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=ViewContent&noscript=1"
     .ui-tooltip{display:none;}
     .footer-inner{justify-content:center;text-align:center;}
     .quote-card p{font-size:13px;}
-
-    /* VSL cobrindo a tela inteira no mobile */
-    .vsl-section{padding:0;}
-    .vsl-section .container{padding:0;max-width:none;}
-    #vturb-player{
-      position:relative;
-      width:100vw;max-width:none;
-      height:100vh;height:100dvh;
-      margin:0;border-radius:0;border:none;
-      overflow:hidden;
-      display:flex;align-items:center;justify-content:center;
-      background:#000;
-    }
-    /* O player interno (headline + video + barra de progresso) e renderizado
-       em shadow DOM fechado, num layout fixo de proporcao 9:16. Esticar o host
-       para 100vw/100dvh (proporcao da tela, quase sempre mais alta que 9:16)
-       descola esses elementos internos do enquadramento e corta headline/barra.
-       Por isso mantemos a proporcao 9:16 e so limitamos ao tamanho da tela
-       (letterbox), em vez de esticar. */
-    #vturb-player vturb-smartplayer{
-      max-width:none !important;
-      position:relative !important;
-      width:min(100vw, calc(100dvh * 9 / 16)) !important;
-      height:min(100dvh, calc(100vw * 16 / 9)) !important;
-    }
-    #vturb-player .vturb-player-placeholder{
-      position:absolute !important;inset:0;
-      width:100% !important;height:100% !important;
-      padding:0 !important;
-    }
-    #vturb-player iframe,#vturb-player video{
-      position:absolute !important;inset:0;
-      width:100% !important;height:100% !important;
-      object-fit:cover;
-    }
   }
 
   @media (max-width:480px){
