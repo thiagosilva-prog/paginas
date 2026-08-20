@@ -1183,7 +1183,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=ViewContent&noscript=1"
   var DELAY_SECONDS = 508;
   var revealed = false;
 
-  document.addEventListener('player:ready', function(event){
+  function onPlayerReady(event){
     if(revealed) return;
     var detail = event.detail || {};
     var player = detail.player || document.querySelector('vturb-smartplayer');
@@ -1194,7 +1194,20 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=ViewContent&noscript=1"
       waFloat.setAttribute('href', 'https://wa.me/5592995060144?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20LexControl%20mas%20gostaria%20de%20tirar%20d%C3%BAvidas');
     }
     player.displayHiddenElements(DELAY_SECONDS, ['.hide'], { persist: true });
-  });
+  }
+
+  // O player dispara "player:ready" diretamente no elemento <vturb-smartplayer>
+  // com bubbles:false/composed:false, entao um listener em document nunca o recebe.
+  // Escutamos em document (fallback, caso isso mude) e no proprio elemento assim
+  // que ele existir no DOM.
+  document.addEventListener('player:ready', onPlayerReady);
+  var attachToPlayer = setInterval(function(){
+    var player = document.querySelector('vturb-smartplayer');
+    if(player){
+      clearInterval(attachToPlayer);
+      player.addEventListener('player:ready', onPlayerReady);
+    }
+  }, 200);
 
   // Assim que o conteúdo for revelado, recalcula elementos que dependem de
   // layout (ex.: a bolinha do switch de preços, que mediu offsetWidth=0
