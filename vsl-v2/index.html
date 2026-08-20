@@ -934,9 +934,9 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
           </tr>
           <tr class="cta-row">
             <td class="feat-col"></td>
-            <td><a href="https://buy.stripe.com/3cI3cnfDZ8wM9s18OkeUU01" class="price-btn outline" data-stripe-plan="mensal">Assinar Mensal</a></td>
-            <td><a href="https://buy.stripe.com/28E28j3VhaEUfQpc0weUU00" class="price-btn outline" data-stripe-plan="semestral">Assinar Semestral</a></td>
-            <td class="col-anual"><a href="https://buy.stripe.com/6oU3cn4Zl5kAcEdd4AeUU02" class="price-btn solid" data-stripe-plan="anual">Garantir Plano Anual</a></td>
+            <td><a href="https://lastlink.com/p/CA2631322/checkout-payment/" class="price-btn outline" data-plan="mensal">Assinar Mensal</a></td>
+            <td><a href="https://lastlink.com/p/CA2631322/checkout-payment/" class="price-btn outline" data-plan="semestral">Assinar Semestral</a></td>
+            <td class="col-anual"><a href="https://lastlink.com/p/CA2631322/checkout-payment/" class="price-btn solid" data-plan="anual">Garantir Plano Anual</a></td>
           </tr>
         </tbody>
       </table>
@@ -1033,7 +1033,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       <div class="z1">
         <h2>Não deixe a falta de gestão financeira fechar as portas da sua operação.</h2>
         <p>Escolha o plano ideal e proteja o seu escritório.</p>
-        <a href="https://buy.stripe.com/6oU3cn4Zl5kAcEdd4AeUU02" class="btn btn-teal btn-lg" data-stripe-plan="anual">Garantir meu acesso ao Lex Control</a>
+        <a href="https://lastlink.com/p/CA2631322/checkout-payment/" class="btn btn-teal btn-lg" data-plan="anual">Garantir meu acesso ao Lex Control</a>
       </div>
     </div>
   </div>
@@ -1155,8 +1155,6 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   var VALUES = { mensal: 497, semestral: 2382, anual: 3564 };
   var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
 
-  // A Stripe repassa esses parametros para a URL de redirecionamento pos-pagamento
-  // automaticamente, desde que o link de pagamento use redirect customizado (o nosso usa).
   function appendUtms(url){
     var pageParams = new URLSearchParams(window.location.search);
     var extra = new URLSearchParams();
@@ -1169,13 +1167,13 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     return url + (url.indexOf('?') === -1 ? '?' : '&') + qs;
   }
 
-  document.querySelectorAll('[data-stripe-plan]').forEach(function(btn){
+  document.querySelectorAll('[data-plan]').forEach(function(btn){
     btn.addEventListener('click', function(e){
       var href = appendUtms(btn.getAttribute('href'));
       btn.setAttribute('href', href);
       if(typeof fbq !== 'function') return; // sem pixel, navega normalmente (ja com os UTMs)
       e.preventDefault();
-      var plan = btn.getAttribute('data-stripe-plan');
+      var plan = btn.getAttribute('data-plan');
       fbq('track', 'InitiateCheckout', {
         content_name: 'LexControl - ' + plan,
         content_category: plan,

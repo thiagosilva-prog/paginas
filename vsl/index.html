@@ -903,7 +903,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
         <div class="price-total">Cobrança mensal recorrente · sem fidelidade</div>
         <p class="price-desc">Flexibilidade total para começar a operar no êxito com previsibilidade, sem compromisso de permanência.</p>
         <!-- STRIPE: Payment Link do preço Mensal (upsell nativo para o Anual configurado no Stripe) -->
-        <a href="https://buy.stripe.com/3cI3cnfDZ8wM9s18OkeUU01" class="price-btn outline" data-stripe-plan="mensal">Quero contratar</a>
+        <a href="https://lastlink.com/p/CA2631322/checkout-payment/" class="price-btn outline" data-plan="mensal">Quero contratar</a>
         <div class="price-features">
           <h4>Inclui:</h4>
           <ul>
@@ -928,7 +928,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
         <div class="price-total">6x de <b>R$ 397</b> · total <b>R$ 2.382</b></div>
         <p class="price-desc">Mais recursos de análise e integração para bancas em crescimento que precisam de controle da carteira.</p>
         <!-- STRIPE: Payment Link do preço Semestral (upsell nativo para o Anual configurado no Stripe) -->
-        <a href="https://buy.stripe.com/28E28j3VhaEUfQpc0weUU00" class="price-btn outline" data-stripe-plan="semestral">Quero contratar</a>
+        <a href="https://lastlink.com/p/CA2631322/checkout-payment/" class="price-btn outline" data-plan="semestral">Quero contratar</a>
         <div class="price-features">
           <h4>Inclui:</h4>
           <ul>
@@ -954,7 +954,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
         <div class="price-total">12x de <b>R$ 297</b> · total <b>R$ 3.564</b></div>
         <p class="price-desc">O plano mais econômico, com a plataforma completa e acompanhamento dedicado para grandes operações.</p>
         <!-- STRIPE: Payment Link do preço Anual (sem upsell, é o destino final) -->
-        <a href="https://buy.stripe.com/6oU3cn4Zl5kAcEdd4AeUU02" class="price-btn solid" data-stripe-plan="anual">Quero contratar</a>
+        <a href="https://lastlink.com/p/CA2631322/checkout-payment/" class="price-btn solid" data-plan="anual">Quero contratar</a>
         <div class="price-features">
           <h4>Inclui:</h4>
           <ul>
@@ -1173,8 +1173,6 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   var VALUES = { mensal: 497, semestral: 2382, anual: 3564 };
   var UTM_KEYS = ['utm_source','utm_medium','utm_campaign','utm_term','utm_content'];
 
-  // A Stripe repassa esses parametros para a URL de redirecionamento pos-pagamento
-  // automaticamente, desde que o link de pagamento use redirect customizado (o nosso usa).
   function appendUtms(url){
     var pageParams = new URLSearchParams(window.location.search);
     var extra = new URLSearchParams();
@@ -1187,13 +1185,13 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     return url + (url.indexOf('?') === -1 ? '?' : '&') + qs;
   }
 
-  document.querySelectorAll('.price-btn[data-stripe-plan]').forEach(function(btn){
+  document.querySelectorAll('.price-btn[data-plan]').forEach(function(btn){
     btn.addEventListener('click', function(e){
       var href = appendUtms(btn.getAttribute('href'));
       btn.setAttribute('href', href);
       if(typeof fbq !== 'function') return; // sem pixel, navega normalmente (ja com os UTMs)
       e.preventDefault();
-      var plan = btn.getAttribute('data-stripe-plan');
+      var plan = btn.getAttribute('data-plan');
       fbq('track', 'InitiateCheckout', {
         content_name: 'LexControl - ' + plan,
         content_category: plan,
