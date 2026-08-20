@@ -1189,6 +1189,10 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=ViewContent&noscript=1"
     var player = detail.player || document.querySelector('vturb-smartplayer');
     if(!player || typeof player.displayHiddenElements !== 'function') return;
     revealed = true;
+    var waFloat = document.getElementById('waFloat');
+    if(waFloat){
+      waFloat.setAttribute('href', 'https://wa.me/5592995060144?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20LexControl%20mas%20gostaria%20de%20tirar%20d%C3%BAvidas');
+    }
     player.displayHiddenElements(DELAY_SECONDS, ['.hide'], { persist: true });
   });
 
@@ -1245,7 +1249,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=ViewContent&noscript=1"
 </script>
 
 <a
-  href="https://wa.me/5592995060144?text=Ol%C3%A1%2C%20tenho%20interesse%20no%20LexControl%20mas%20gostaria%20de%20tirar%20d%C3%BAvidas"
+  id="waFloat"
   class="wa-float hide"
   target="_blank"
   rel="noopener"
