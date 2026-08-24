@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Planilha de DRE Financeiro para Advogados</title>
+<meta name="description" content="Organize a gestão financeira do seu escritório jurídico, controle honorários, custas e tenha um DRE com EBITDA automático — sem depender de softwares caros ou planilhas complexas.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-app:#FFFFFF;
+    --bg-surface:#F6F7F9;
+    --bg-surface-alt:#EFF1F4;
+    --text-primary:#12161C;
+    --text-secondary:#57616C;
+    --text-muted:#6B7684;
+    --accent:#0E7268;
+    --accent-dim:#0B5A52;
+    --accent-soft:#E6F2F0;
+    --accent-soft-border:#BFDFDA;
+    --danger:#B0281D;
+    --danger-soft:#FBEBE9;
+    --danger-soft-border:#F0C6C1;
+    --border-default:#E6E9ED;
+    --border-strong:#D7DBE1;
+    --radius-sm:4px;
+    --radius-md:8px;
+    --radius-lg:12px;
+    --radius-card:10px;
+    --radius-pill:999px;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;overflow-x:hidden;width:100%;}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    background:var(--bg-app);
+    color:var(--text-primary);
+    font-size:14px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    width:100%;
+    max-width:100vw;
+  }
+  .container{max-width:1160px;margin:0 auto;padding:0 clamp(16px,5vw,24px);}
+  .relative{position:relative;}
+  .z1{position:relative;z-index:1;}
+  .glow{position:absolute;border-radius:50%;filter:blur(110px);pointer-events:none;z-index:0;}
+
+  /* ===== Glass ===== */
+  .glass{
+    background:rgba(255,255,255,0.70);
+    -webkit-backdrop-filter:blur(20px) saturate(150%);
+    backdrop-filter:blur(20px) saturate(150%);
+    border:1px solid rgba(18,22,28,0.08);
+    box-shadow:0 1px 2px rgba(16,24,32,0.04), 0 20px 40px -26px rgba(16,24,32,0.14);
+  }
+  .glass-strong{
+    background:rgba(255,255,255,0.82);
+    -webkit-backdrop-filter:blur(26px) saturate(160%);
+    backdrop-filter:blur(26px) saturate(160%);
+    border:1px solid rgba(18,22,28,0.10);
+    box-shadow:0 2px 4px rgba(16,24,32,0.05), 0 28px 56px -30px rgba(16,24,32,0.18);
+  }
+
+  /* ===== Top banner ===== */
+  .top-banner{
+    background:var(--accent-soft);
+    color:var(--accent-dim);text-align:center;
+    padding:10px 16px;font-size:12.5px;font-weight:700;letter-spacing:.01em;
+    border-bottom:1px solid var(--accent-soft-border);
+    position:relative;z-index:110;
+  }
+  .top-banner b{font-weight:800;}
+  .top-banner .sep{opacity:.55;margin:0 8px;}
+
+  /* ===== Topbar ===== */
+  .topbar{position:sticky;top:12px;z-index:100;max-width:1160px;margin:12px auto 0;padding:0 clamp(12px,4vw,24px);}
+  .topbar-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    height:60px;padding:0 clamp(12px,3vw,20px);border-radius:16px;
+    background:rgba(255,255,255,0.75);
+    -webkit-backdrop-filter:blur(20px) saturate(150%);
+    backdrop-filter:blur(20px) saturate(150%);
+    border:1px solid rgba(18,22,28,0.08);
+    box-shadow:0 1px 2px rgba(16,24,32,0.04), 0 16px 32px -22px rgba(16,24,32,0.12);
+  }
+  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:-0.01em;}
+  .logo-mark{
+    width:30px;height:30px;border-radius:8px;flex-shrink:0;
+    background:var(--accent);
+    display:flex;align-items:center;justify-content:center;font-size:15px;
+  }
+  .logo span em{font-style:normal;color:var(--accent);}
+  .topbar .btn{flex-shrink:0;}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    border-radius:var(--radius-md);padding:11px 20px;
+    font-size:13px;font-weight:700;text-decoration:none;cursor:pointer;
+    border:none;font-family:inherit;transition:all .15s;
+  }
+  .btn-lime{background:var(--accent);color:#fff;box-shadow:0 1px 2px rgba(16,24,32,0.06), 0 10px 20px -10px rgba(14,114,104,0.35);}
+  .btn-lime:hover{background:var(--accent-dim);transform:translateY(-1px);}
+  .btn-invert{background:#fff;color:var(--accent-dim);}
+  .btn-invert:hover{background:#F3FBFA;transform:translateY(-1px);}
+  .btn-lg{padding:16px 30px;font-size:15px;border-radius:12px;}
+
+  /* ===== Hero ===== */
+  .hero{position:relative;padding:64px 0 80px;overflow:visible;}
+  .hero .glow.g1{width:520px;height:420px;top:-160px;right:-80px;background:rgba(14,114,104,0.10);}
+  .hero .glow.g2{width:420px;height:380px;top:60px;left:-160px;background:rgba(14,114,104,0.06);}
+  .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    background:rgba(230,242,240,0.75);border:1px solid var(--accent-soft-border);color:var(--accent-dim);
+    -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+    border-radius:var(--radius-pill);padding:6px 14px;font-size:11px;font-weight:700;
+    text-transform:uppercase;letter-spacing:0.08em;margin-bottom:22px;
+  }
+  .eyebrow.red{background:rgba(251,235,233,0.75);border-color:var(--danger-soft-border);color:var(--danger);}
+  .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  h1{font-size:clamp(28px,5.6vw,44px);line-height:1.16;font-weight:800;letter-spacing:-0.02em;margin-bottom:20px;}
+  h1 .grad{color:var(--accent);}
+  .hero-sub{font-size:clamp(14px,3vw,16px);color:var(--text-secondary);max-width:520px;margin-bottom:32px;}
+  .price-box{
+    display:flex;flex-wrap:wrap;align-items:center;gap:18px;
+    border-radius:16px;padding:20px 22px;margin-bottom:20px;max-width:460px;
+  }
+  .price-box .old{font-size:14px;color:var(--text-muted);text-decoration:line-through;}
+  .price-box .now{display:flex;align-items:baseline;gap:4px;}
+  .price-box .now .cur{font-size:16px;font-weight:700;color:var(--accent);}
+  .price-box .now .val{font-size:34px;font-weight:800;letter-spacing:-0.02em;color:var(--text-primary);}
+  .hero-ctas{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;max-width:460px;}
+  .hero-ctas .btn{width:100%;}
+  .hero-note{font-size:12px;color:var(--text-muted);text-align:center;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;}
+  .hero-note strong{color:var(--text-secondary);font-weight:600;}
+
+  /* ===== Real product screenshots ===== */
+  .hero-mock{position:relative;}
+  .shot{border-radius:14px;overflow:hidden;}
+  .shot-bar{height:32px;display:flex;align-items:center;gap:6px;padding:0 14px;background:#12161C;border-bottom:1px solid rgba(255,255,255,0.06);}
+  .shot-bar span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.18);display:block;}
+  .shot-bar .tab{margin-left:8px;font-size:10.5px;color:rgba(255,255,255,0.5);letter-spacing:.02em;}
+  .shot img{display:block;width:100%;height:auto;}
+
+  /* ===== Sections ===== */
+  section{padding:88px 0;position:relative;}
+  .section-eyebrow{font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:12px;}
+  h2{font-size:clamp(22px,4.4vw,32px);font-weight:800;letter-spacing:-0.02em;line-height:1.25;margin-bottom:16px;}
+  .section-sub{font-size:clamp(13px,3vw,15px);color:var(--text-secondary);max-width:640px;}
+  .section-head{margin-bottom:44px;}
+  .center{text-align:center;}
+  .center .section-sub{margin:0 auto;}
+
+  /* ===== Problem section ===== */
+  .problem-section{background:var(--bg-surface);}
+  .problem-lead{max-width:760px;margin:0 auto 20px;font-size:15px;color:var(--text-secondary);}
+  .problem-lead b{color:var(--text-primary);}
+
+  .bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px;}
+  .bento > .cell{border-radius:16px;padding:26px;transition:transform .2s, border-color .2s;position:relative;overflow:hidden;}
+  .bento > .cell:hover{transform:translateY(-3px);border-color:var(--border-strong);}
+  .c-2{grid-column:span 2;}
+  .c-3{grid-column:span 3;}
+  .c-4{grid-column:span 4;}
+  .c-6{grid-column:span 6;}
+  .cell h3{font-size:16px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em;}
+  .cell > p{font-size:13px;color:var(--text-secondary);}
+  .cell-icon{
+    width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;
+    margin-bottom:16px;border:1px solid var(--border-default);background:rgba(246,247,249,0.8);
+  }
+  .cell.tone-danger{
+    background:rgba(251,235,233,0.72);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+    border-color:var(--danger-soft-border);
+  }
+  .cell.tone-danger h3{color:var(--danger);}
+  .cell-icon.tone-danger-icon{background:rgba(246,217,214,0.85);border-color:var(--danger-soft-border);}
+
+  .solution-callout{
+    max-width:820px;margin:36px auto 0;border-radius:16px;padding:22px 26px;
+    display:flex;align-items:flex-start;gap:14px;
+    background:rgba(230,242,240,0.7);
+    -webkit-backdrop-filter:blur(16px) saturate(140%);backdrop-filter:blur(16px) saturate(140%);
+    border:1px solid var(--accent-soft-border);
+  }
+  .solution-callout .ic{font-size:22px;flex-shrink:0;}
+  .solution-callout p{font-size:14px;color:var(--text-primary);font-weight:500;}
+  .solution-callout b{color:var(--accent-dim);}
+
+  /* ===== Feature tour ===== */
+  .tour-item{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;margin-bottom:80px;}
+  .tour-item:last-child{margin-bottom:0;}
+  .tour-item.rev .tour-text{order:2;}
+  .tour-item.rev .shot{order:1;}
+  .tour-num{
+    display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:10px;
+    background:var(--accent-soft);border:1px solid var(--accent-soft-border);color:var(--accent-dim);
+    font-weight:800;font-size:14px;margin-bottom:16px;
+  }
+  .tour-text h3{font-size:clamp(18px,3.4vw,22px);font-weight:800;letter-spacing:-0.01em;margin-bottom:12px;}
+  .tour-text p{font-size:14px;color:var(--text-secondary);}
+
+  /* ===== Mid CTA band ===== */
+  .midcta{
+    border-radius:20px;padding:44px 32px;text-align:center;overflow:hidden;position:relative;
+    background:linear-gradient(165deg,rgba(14,114,104,0.94),rgba(11,90,82,0.92));
+    -webkit-backdrop-filter:blur(22px) saturate(150%);backdrop-filter:blur(22px) saturate(150%);
+    border:1px solid rgba(255,255,255,0.16);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.14), 0 30px 60px -28px rgba(14,114,104,0.5);
+  }
+  .midcta .glow{width:360px;height:240px;top:-100px;left:20%;background:rgba(255,255,255,0.16);}
+  .midcta h3{font-size:clamp(18px,3.6vw,24px);font-weight:800;margin-bottom:10px;color:#fff;}
+  .midcta p{color:rgba(255,255,255,0.85);margin-bottom:26px;}
+  .trust-row{display:flex;flex-wrap:wrap;justify-content:center;gap:18px;margin-top:22px;font-size:12px;color:var(--text-muted);}
+  .trust-row span{display:inline-flex;align-items:center;gap:6px;}
+  .midcta .trust-row{color:rgba(255,255,255,0.75);}
+
+  /* ===== FAQ ===== */
+  .faq-list{display:flex;flex-direction:column;gap:12px;max-width:760px;margin:0 auto;}
+  .faq-item{border-radius:14px;overflow:hidden;transition:border-color .25s;}
+  .faq-item.open{border-color:var(--accent);}
+  .faq-q{
+    width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:19px 22px;background:none;border:none;cursor:pointer;text-align:left;
+    font-family:inherit;color:var(--text-primary);font-size:14.5px;font-weight:600;
+  }
+  .faq-chevron{
+    flex-shrink:0;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:11px;color:var(--text-secondary);background:var(--bg-surface);border:1px solid var(--border-default);
+    transition:transform .3s;
+  }
+  .faq-item.open .faq-chevron{transform:rotate(180deg);background:var(--accent-soft);border-color:var(--accent-soft-border);color:var(--accent-dim);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+  .faq-a-inner{padding:0 22px 20px;font-size:13.5px;color:var(--text-secondary);}
+
+  /* ===== Final CTA ===== */
+  .cta-final{
+    position:relative;text-align:center;border-radius:20px;padding:64px 32px;overflow:hidden;
+    background:linear-gradient(165deg,rgba(14,114,104,0.94),rgba(11,90,82,0.92));
+    -webkit-backdrop-filter:blur(22px) saturate(150%);backdrop-filter:blur(22px) saturate(150%);
+    border:1px solid rgba(255,255,255,0.16);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,0.14), 0 30px 60px -28px rgba(14,114,104,0.5);
+  }
+  .cta-final .glow{width:420px;height:280px;top:-140px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,0.14);}
+  .cta-final .eyebrow{background:rgba(255,255,255,0.14);border-color:rgba(255,255,255,0.28);color:#fff;-webkit-backdrop-filter:none;backdrop-filter:none;}
+  .cta-final h2{margin-bottom:14px;color:#fff;}
+  .cta-final p{color:rgba(255,255,255,0.85);max-width:520px;margin:0 auto 30px;}
+  .cta-final .hero-ctas{margin:0 auto 8px;}
+  .cta-final .hero-note{color:rgba(255,255,255,0.7);}
+  .cta-final .hero-note strong{color:#fff;}
+
+  /* ===== Footer ===== */
+  footer{border-top:1px solid var(--border-default);padding:32px 0;margin-top:40px;}
+  .footer-inner{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;text-align:center;}
+  footer p{font-size:12px;color:var(--text-muted);}
+
+  /* ===== Responsive ===== */
+  @media (max-width:960px){
+    .hero-grid{grid-template-columns:1fr;gap:44px;}
+    .hero-mock{max-width:420px;margin:0 auto;}
+    .c-4,.c-3,.c-2{grid-column:span 6;}
+    .tour-item{grid-template-columns:1fr;gap:28px;margin-bottom:56px;}
+    .tour-item.rev .tour-text{order:1;}
+    .tour-item.rev .shot{order:2;}
+    section{padding:60px 0;}
+  }
+  @media (max-width:520px){
+    .price-box{flex-direction:column;align-items:flex-start;gap:6px;}
+    .top-banner{font-size:11.5px;}
+    .top-banner .sep{display:block;margin:2px 0 0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="top-banner">
+  <b>OFERTA ESPECIAL PARA ESCRITÓRIOS DE ADVOCACIA</b><span class="sep">|</span>Desconto exclusivo por tempo limitado
+</div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="logo">
+      <div class="logo-mark">📊</div>
+      <span>Planilha <em>DRE</em> Jurídico</span>
+    </div>
+    <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-lime">Quero a planilha</a>
+  </div>
+</div>
+
+<section class="hero relative">
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="container z1">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow"><span class="dot"></span> Planilha de Gestão Financeira Jurídica</div>
+        <h1>Descubra Exatamente Qual Área da Advocacia <span class="grad">Paga Suas Contas</span> e Qual Está Consumindo Sua Margem</h1>
+        <p class="hero-sub">Organize a gestão financeira do seu escritório jurídico, controle honorários, custas e tenha um DRE com EBITDA automático — sem depender de softwares caros ou planilhas complexas.</p>
+
+        <div class="price-box glass">
+          <span class="old">De R$ 97,00</span>
+          <div class="now"><span class="cur">R$</span><span class="val">37,00</span></div>
+        </div>
+
+        <div class="hero-ctas">
+          <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-lime btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
+          <div class="hero-note">Acesso Imediato <span class="sep">•</span> <strong>Pagamento Único</strong> <span class="sep">•</span> <strong>Sem Mensalidades</strong></div>
+        </div>
+      </div>
+
+      <div class="hero-mock">
+        <div class="shot glass-strong">
+          <div class="shot-bar"><span></span><span></span><span></span><span class="tab">Dashboard — Indicadores Estratégicos</span></div>
+          <img src="dashboard.jpg" alt="Print real do Dashboard da planilha, com Receita Líquida, EBITDA, Margem Líquida e representatividade dos centros de custo" loading="eager">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="problem-section">
+  <div class="container z1">
+    <div class="section-head center">
+      <div class="eyebrow red"><span class="dot"></span> O Erro Fatal na Gestão da Advocacia</div>
+      <h2>Você Sabe Quanto Seu Escritório Realmente Lucra Hoje?</h2>
+    </div>
+
+    <p class="problem-lead center">Muitos advogados cometem o erro grave de <b>misturar despesas pessoais com as do escritório</b>, confundir faturamento de honorários com lucro real e ignorar a diferença entre o dinheiro que entra no caixa e a eficiência do negócio.</p>
+    <p class="problem-lead center">Sem uma separação clara entre <b>Custos Diretos</b> (advogados correspondentes, audiencistas, custas processuais) e <b>Despesas Operacionais</b> (aluguel, sistemas jurídicos, marketing), é impossível saber se o seu escritório está crescendo com saúde ou caminhando para o prejuízo.</p>
+
+    <h3 style="text-align:center;font-size:15px;font-weight:700;color:var(--text-primary);margin:44px 0 24px;">O Resultado Desse Descontrole:</h3>
+
+    <div class="bento">
+      <div class="cell glass tone-danger c-2">
+        <div class="cell-icon tone-danger-icon">💸</div>
+        <h3>Mistura de caixa</h3>
+        <p>Você não sabe se o honorário de êxito pagou a operação ou se você tirou do bolso para cobrir o mês.</p>
+      </div>
+      <div class="cell glass tone-danger c-2">
+        <div class="cell-icon tone-danger-icon">🙈</div>
+        <h3>Cegueira estratégica</h3>
+        <p>Não sabe se o setor Trabalhista, Cível ou Tributário traz mais retorno financeiro.</p>
+      </div>
+      <div class="cell glass tone-danger c-2">
+        <div class="cell-icon tone-danger-icon">⏳</div>
+        <h3>Incerteza no final do mês</h3>
+        <p>Entra dinheiro de grande acordo no 2º semestre, mas a margem do ano continua ilíquida.</p>
+      </div>
+    </div>
+
+    <div class="solution-callout">
+      <div class="ic">💡</div>
+      <p><b>A SOLUÇÃO:</b> Uma ferramenta desenhada especificamente para a realidade contábil, financeira e operacional da advocacia.</p>
+    </div>
+  </div>
+</section>
+
+<section id="produto">
+  <div class="container z1">
+    <div class="section-head center">
+      <div class="eyebrow"><span class="dot"></span> Conheça a Planilha de Gestão Financeira Jurídica</div>
+      <h2>Do caos financeiro a decisões estratégicas e margens previsíveis</h2>
+      <p class="section-sub center">Uma ferramenta prática e intuitiva que transforma os números do seu escritório em clareza — sem fórmulas, sem complicação.</p>
+    </div>
+
+    <div class="bento">
+      <div class="cell glass c-2">
+        <div class="cell-icon">🗂️</div>
+        <h3>Centros de Custo Flexíveis (Sem Fórmulas)</h3>
+        <p>Divisão clara por setores: Administrativo, Jurídico, Comercial/Marketing e Financeiro. Permite definir e cobrar metas financeiras dos responsáveis por cada departamento.</p>
+      </div>
+      <div class="cell glass c-2">
+        <div class="cell-icon">📊</div>
+        <h3>DRE Automático Voltado ao Mercado Jurídico</h3>
+        <p>Diferencie honorários contratuais, de êxito e de sucumbência. Apuração automática de Receita Bruta/Líquida, Lucro Bruto, EBITDA e Lucro Líquido.</p>
+      </div>
+      <div class="cell glass c-2">
+        <div class="cell-icon">🎯</div>
+        <h3>Dashboard Estratégico &amp; Análise de ROI</h3>
+        <p>Visualize em gráficos claros qual especialidade jurídica traz maior retorno relativo ao esforço/gasto do escritório e acompanhe a evolução mês a mês.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="funcionalidades" class="relative">
+  <div class="container z1">
+    <div class="section-head center">
+      <div class="eyebrow"><span class="dot"></span> Tour pelas Funcionalidades</div>
+      <h2>Veja como fica simples organizar o financeiro do seu escritório</h2>
+    </div>
+
+    <div class="tour-item">
+      <div class="tour-text">
+        <div class="tour-num">1</div>
+        <h3>Configuração Personalizada e Descomplicada</h3>
+        <p>Cadastre suas áreas de atuação (Trabalhista, Cível, Tributário, Família, etc.) e seus centros de custo em poucos cliques. Tudo preconfigurado, sem necessidade de mexer em fórmulas complexas.</p>
+      </div>
+      <div class="shot glass">
+        <div class="shot-bar"><span></span><span></span><span></span><span class="tab">Configurações</span></div>
+        <img src="config.jpg" alt="Print real da aba Configurações: cadastro dos centros de custo e categorias vinculadas aos grupos da DRE" loading="lazy">
+      </div>
+    </div>
+
+    <div class="tour-item rev">
+      <div class="tour-text">
+        <div class="tour-num">2</div>
+        <h3>Lançamentos Práticos e Categorização Automatizada</h3>
+        <p>Faça lançamentos diários rápidos. O sistema automatiza sinais positivos/negativos, direcionamento de impostos e vinculação de honorários de êxito, sucumbência ou recorrentes.</p>
+      </div>
+      <div class="shot glass">
+        <div class="shot-bar"><span></span><span></span><span></span><span class="tab">Lançamentos</span></div>
+        <img src="lancamentos.jpg" alt="Print real da aba Lançamentos: registro de entradas e saídas com categoria, centro de custo e valor" loading="lazy">
+      </div>
+    </div>
+
+    <div class="tour-item">
+      <div class="tour-text">
+        <div class="tour-num">3</div>
+        <h3>DRE Gerencial Completo com EBITDA</h3>
+        <p>Entenda a capacidade real de geração de caixa do seu escritório sem mascarar juros ou empréstimos. Acompanhe a Margem Bruta, Margem EBITDA e Margem Líquida em tempo real.</p>
+      </div>
+      <div class="shot glass">
+        <div class="shot-bar"><span></span><span></span><span></span><span class="tab">DRE</span></div>
+        <img src="dre.jpg" alt="Print real da aba DRE: Receita Bruta até Lucro Líquido, mês a mês, com EBITDA e margens calculadas automaticamente" loading="lazy">
+      </div>
+    </div>
+
+    <div class="tour-item rev">
+      <div class="tour-text">
+        <div class="tour-num">4</div>
+        <h3>Dashboard de ROI por Área de Atuação</h3>
+        <p>Descubra visualmente a representatividade percentual de gastos de cada departamento e identifique qual ramo do direito é o verdadeiro motor de lucro do seu negócio.</p>
+      </div>
+      <div class="shot glass">
+        <div class="shot-bar"><span></span><span></span><span></span><span class="tab">Dashboard</span></div>
+        <img src="dashboard.jpg" alt="Print real do Dashboard: representatividade dos centros de custo e evolução da margem EBITDA mês a mês" loading="lazy">
+      </div>
+    </div>
+
+    <div class="tour-item">
+      <div class="tour-text">
+        <div class="tour-num">5</div>
+        <h3>Glossário Integrado em Linguagem Simples</h3>
+        <p>Nunca usou DRE ou EBITDA? A própria planilha tem uma aba de glossário que explica cada termo financeiro em linguagem simples, direto onde você está trabalhando — sem precisar pesquisar ou fazer curso.</p>
+      </div>
+      <div class="shot glass">
+        <div class="shot-bar"><span></span><span></span><span></span><span class="tab">Glossário</span></div>
+        <img src="glossario.jpg" alt="Print real da aba Glossário: cada termo financeiro (DRE, EBITDA, Margem Bruta, etc.) explicado em linguagem simples" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container z1">
+    <div class="midcta">
+      <div class="glow"></div>
+      <div class="z1">
+        <h3>Chega de adivinhar onde seu escritório está ganhando (ou perdendo) dinheiro</h3>
+        <p>Por apenas <b style="color:#fff;">R$ 37,00</b>, pagamento único, você tem acesso imediato à planilha completa.</p>
+        <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-invert btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
+        <div class="trust-row">
+          <span>Compra 100% segura</span>
+          <span>Acesso imediato</span>
+          <span>Pix ou cartão</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container z1">
+    <div class="section-head center">
+      <div class="eyebrow"><span class="dot"></span> Perguntas Frequentes</div>
+      <h2>Ainda tem dúvidas?</h2>
+    </div>
+
+    <div class="faq-list">
+      <div class="faq-item glass">
+        <button class="faq-q" type="button" aria-expanded="false">
+          Preciso saber fórmulas avançadas de Excel para usar?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Não! A planilha foi desenvolvida para ser 100% intuitiva e sem fórmulas aparentes. Basta preencher os lançamentos e os relatórios/dashboards são gerados automaticamente.</div></div>
+      </div>
+      <div class="faq-item glass">
+        <button class="faq-q" type="button" aria-expanded="false">
+          Serve para advogados autônomos ou apenas escritórios grandes?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Serve para ambos. A planilha se adapta desde o advogado individual que quer organizar seus honorários até escritórios com múltiplos sócios, áreas de atuação e centros de custos.</div></div>
+      </div>
+      <div class="faq-item glass">
+        <button class="faq-q" type="button" aria-expanded="false">
+          Como recebo a planilha após a compra?
+          <span class="faq-chevron">▾</span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">O acesso é imediato! Assim que o pagamento for aprovado, você receberá um e-mail com o link para acessar sua área de membro e baixar o arquivo, além das instruções de uso.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container z1">
+    <div class="cta-final">
+      <div class="glow"></div>
+      <div class="z1">
+        <div class="eyebrow"><span class="dot"></span> Planilha de Gestão Financeira Jurídica</div>
+        <h2>Pronto para descobrir onde seu escritório realmente lucra?</h2>
+        <p>Organize honorários, custas e centros de custo — e tenha um DRE com EBITDA automático hoje mesmo.</p>
+        <div class="hero-ctas" style="max-width:420px;">
+          <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-invert btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
+          <div class="hero-note">Acesso Imediato <span class="sep">•</span> <strong>Pagamento Único</strong> <span class="sep">•</span> <strong>Sem Mensalidades</strong></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <p>© 2026 Planilha de Gestão Financeira Jurídica. Todos os direitos reservados.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var item = btn.closest('.faq-item');
+      var panel = item.querySelector('.faq-a');
+      var isOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item.open').forEach(function(openItem){
+        if(openItem !== item){
+          openItem.classList.remove('open');
+          openItem.querySelector('.faq-a').style.maxHeight = null;
+          openItem.querySelector('.faq-q').setAttribute('aria-expanded','false');
+        }
+      });
+      if(isOpen){
+        item.classList.remove('open');
+        panel.style.maxHeight = null;
+        btn.setAttribute('aria-expanded','false');
+      } else {
+        item.classList.add('open');
+        panel.style.maxHeight = panel.scrollHeight + 'px';
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
