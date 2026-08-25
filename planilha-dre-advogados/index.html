@@ -245,30 +245,33 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   .midcta .trust-row{color:rgba(255,255,255,0.75);}
 
   /* ===== Value stack ===== */
-  .stack-grid{display:grid;grid-template-columns:1.1fr 0.9fr;gap:28px;align-items:stretch;}
-  .stack-card{border-radius:20px;padding:32px;position:relative;overflow:hidden;}
+  .stack-card{border-radius:20px;padding:40px;position:relative;overflow:hidden;max-width:640px;margin:0 auto;text-align:center;}
   .stack-badge{
     display:inline-flex;align-items:center;gap:8px;background:var(--accent-soft);border:1px solid var(--accent-soft-border);
     color:var(--accent-dim);border-radius:var(--radius-pill);padding:6px 14px;font-size:11px;font-weight:700;
     text-transform:uppercase;letter-spacing:0.06em;margin-bottom:18px;
   }
-  .stack-card .shot{margin-bottom:22px;}
-  .stack-card h3{font-size:19px;font-weight:800;letter-spacing:-0.01em;margin-bottom:18px;}
-  .stack-list{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:26px;}
+  .stack-card h3{font-size:19px;font-weight:800;letter-spacing:-0.01em;margin-bottom:22px;}
+  .stack-list{list-style:none;display:flex;flex-direction:column;gap:11px;margin:0 auto 26px;max-width:460px;text-align:left;}
   .stack-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text-secondary);}
   .stack-list .check{
     flex-shrink:0;width:19px;height:19px;border-radius:50%;background:var(--accent);color:#fff;
     display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;
   }
-  .stack-banner{background:var(--danger);color:#fff;text-align:center;border-radius:12px;padding:12px 16px;font-size:12.5px;font-weight:700;}
-  .stack-price{border-radius:20px;padding:36px 28px;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;}
-  .stack-price .old{font-size:14px;color:var(--text-muted);text-decoration:line-through;}
+  .stack-banner{background:var(--danger);color:#fff;text-align:center;border-radius:12px;padding:12px 16px;font-size:12.5px;font-weight:700;margin-bottom:28px;}
+  .stack-price-row .old{font-size:14px;color:var(--text-muted);text-decoration:line-through;}
   .stack-price-label{font-size:12px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin:10px 0 4px;}
   .stack-price-val{font-size:44px;font-weight:800;letter-spacing:-0.02em;color:var(--accent);}
-  .stack-price-note{font-size:12.5px;color:var(--text-muted);margin-bottom:24px;}
-  .stack-price .btn{width:100%;margin-bottom:14px;}
-  .stack-trust{display:flex;flex-direction:column;gap:8px;margin-top:18px;font-size:11.5px;color:var(--text-muted);}
-  .stack-trust span{display:flex;align-items:center;justify-content:center;gap:6px;}
+  .stack-price-note{font-size:12.5px;color:var(--text-muted);margin-bottom:26px;}
+  .stack-card .btn{width:100%;max-width:420px;margin:0 auto 14px;}
+  .btn-pulse{animation:btn-pulse 2s infinite;}
+  @keyframes btn-pulse{
+    0%{box-shadow:0 0 0 0 rgba(14,114,104,0.5);}
+    70%{box-shadow:0 0 0 16px rgba(14,114,104,0);}
+    100%{box-shadow:0 0 0 0 rgba(14,114,104,0);}
+  }
+  .stack-card .hero-note{margin-bottom:18px;}
+  .stack-card .trust-row{color:var(--text-muted);}
 
   /* ===== FAQ ===== */
   .faq-list{display:flex;flex-direction:column;gap:12px;max-width:760px;margin:0 auto;}
@@ -317,7 +320,6 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     .tour-item{grid-template-columns:1fr;gap:28px;margin-bottom:56px;}
     .tour-item.rev .tour-text{order:1;}
     .tour-item.rev .shot{order:2;}
-    .stack-grid{grid-template-columns:1fr;}
     section{padding:60px 0;}
   }
   @media (max-width:520px){
@@ -510,39 +512,33 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
 
 <section id="oferta-final">
   <div class="container z1">
-    <div class="stack-grid">
-      <div class="stack-card glass-strong">
-        <div class="stack-badge"><span class="dot"></span> Acesso Completo e Imediato</div>
-        <div class="shot glass">
-          <div class="shot-bar"><span></span><span></span><span></span><span class="tab">Dashboard — Indicadores Estratégicos</span></div>
-          <img src="dashboard.webp" alt="Print real do Dashboard da planilha, com Receita Líquida, EBITDA, Margem Líquida e representatividade dos centros de custo" loading="lazy">
-        </div>
-        <h3>Planilha de DRE Financeiro para Advogados</h3>
-        <ul class="stack-list">
-          <li><span class="check">✓</span> DRE automático com EBITDA calculado mês a mês</li>
-          <li><span class="check">✓</span> Centros de custo por área (Cível, Trabalhista, Tributário, Família)</li>
-          <li><span class="check">✓</span> Lançamentos com categorização automática de honorários e despesas</li>
-          <li><span class="check">✓</span> Dashboard estratégico com ROI por especialidade jurídica</li>
-          <li><span class="check">✓</span> Configuração personalizada, sem fórmulas complexas</li>
-          <li><span class="check">✓</span> Glossário financeiro-jurídico integrado</li>
-          <li><span class="check">✓</span> Separação clara entre despesas pessoais e do escritório</li>
-          <li><span class="check">✓</span> Acesso imediato, pagamento único e sem mensalidade</li>
-        </ul>
-        <div class="stack-banner">Oferta Especial para Escritórios de Advocacia</div>
-      </div>
+    <div class="stack-card glass-strong">
+      <div class="stack-badge"><span class="dot"></span> Acesso Completo e Imediato</div>
+      <h3>Planilha de DRE Financeiro para Advogados</h3>
+      <ul class="stack-list">
+        <li><span class="check">✓</span> DRE automático com EBITDA calculado mês a mês</li>
+        <li><span class="check">✓</span> Centros de custo por área (Cível, Trabalhista, Tributário, Família)</li>
+        <li><span class="check">✓</span> Lançamentos com categorização automática de honorários e despesas</li>
+        <li><span class="check">✓</span> Dashboard estratégico com ROI por especialidade jurídica</li>
+        <li><span class="check">✓</span> Configuração personalizada, sem fórmulas complexas</li>
+        <li><span class="check">✓</span> Glossário financeiro-jurídico integrado</li>
+        <li><span class="check">✓</span> Separação clara entre despesas pessoais e do escritório</li>
+        <li><span class="check">✓</span> Acesso imediato, pagamento único e sem mensalidade</li>
+      </ul>
+      <div class="stack-banner">Oferta Especial para Escritórios de Advocacia</div>
 
-      <div class="stack-price glass-strong">
+      <div class="stack-price-row">
         <span class="old">De R$ 197,00</span>
         <div class="stack-price-label">Por apenas</div>
         <div class="stack-price-val">R$ 17,90</div>
         <div class="stack-price-note">Pagamento único</div>
-        <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-lime btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
-        <div class="hero-note">🔒 Acesso imediato no e-mail</div>
-        <div class="stack-trust">
-          <span>🏆 Satisfação garantida</span>
-          <span>💳 Compra 100% segura</span>
-          <span>🔒 Privacidade protegida</span>
-        </div>
+      </div>
+      <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-lime btn-lg btn-pulse">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
+      <div class="hero-note">🔒 Acesso imediato no e-mail</div>
+      <div class="trust-row">
+        <span>🏆 Satisfação garantida</span>
+        <span>💳 Compra 100% segura</span>
+        <span>🔒 Privacidade protegida</span>
       </div>
     </div>
   </div>
