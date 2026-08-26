@@ -89,37 +89,6 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
     box-shadow:0 2px 4px rgba(16,24,32,0.05), 0 28px 56px -30px rgba(16,24,32,0.18);
   }
 
-  /* ===== Top banner ===== */
-  .top-banner{
-    background:var(--accent-soft);
-    color:var(--accent-dim);text-align:center;
-    padding:10px 16px;font-size:12.5px;font-weight:700;letter-spacing:.01em;
-    border-bottom:1px solid var(--accent-soft-border);
-    position:relative;z-index:110;
-  }
-  .top-banner b{font-weight:800;}
-  .top-banner .sep{opacity:.55;margin:0 8px;}
-
-  /* ===== Topbar ===== */
-  .topbar{position:sticky;top:12px;z-index:100;max-width:1160px;margin:12px auto 0;padding:0 clamp(12px,4vw,24px);}
-  .topbar-inner{
-    display:flex;align-items:center;justify-content:space-between;
-    height:60px;padding:0 clamp(12px,3vw,20px);border-radius:16px;
-    background:rgba(255,255,255,0.75);
-    -webkit-backdrop-filter:blur(20px) saturate(150%);
-    backdrop-filter:blur(20px) saturate(150%);
-    border:1px solid rgba(18,22,28,0.08);
-    box-shadow:0 1px 2px rgba(16,24,32,0.04), 0 16px 32px -22px rgba(16,24,32,0.12);
-  }
-  .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;letter-spacing:-0.01em;}
-  .logo-mark{
-    width:30px;height:30px;border-radius:8px;flex-shrink:0;
-    background:var(--accent);
-    display:flex;align-items:center;justify-content:center;font-size:15px;
-  }
-  .logo span em{font-style:normal;color:var(--accent);}
-  .topbar .btn{flex-shrink:0;}
-
   .btn{
     display:inline-flex;align-items:center;justify-content:center;gap:8px;
     border-radius:var(--radius-md);padding:11px 20px;
@@ -133,7 +102,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   .btn-lg{padding:16px 30px;font-size:15px;border-radius:12px;}
 
   /* ===== Hero ===== */
-  .hero{position:relative;padding:64px 0 80px;overflow:visible;}
+  .hero{position:relative;padding:88px 0 80px;overflow:visible;}
   .hero .glow.g1{width:520px;height:420px;top:-160px;right:-80px;background:rgba(14,114,104,0.10);}
   .hero .glow.g2{width:420px;height:380px;top:60px;left:-160px;background:rgba(14,114,104,0.06);}
   .hero-grid{display:grid;grid-template-columns:1.05fr 1fr;gap:56px;align-items:center;}
@@ -149,14 +118,6 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   h1{font-size:clamp(28px,5.6vw,44px);line-height:1.16;font-weight:800;letter-spacing:-0.02em;margin-bottom:20px;}
   h1 .grad{color:var(--accent);}
   .hero-sub{font-size:clamp(14px,3vw,16px);color:var(--text-secondary);max-width:520px;margin-bottom:32px;}
-  .price-box{
-    display:flex;flex-wrap:wrap;align-items:center;gap:18px;
-    border-radius:16px;padding:20px 22px;margin-bottom:20px;max-width:460px;
-  }
-  .price-box .old{font-size:14px;color:var(--text-muted);text-decoration:line-through;}
-  .price-box .now{display:flex;align-items:baseline;gap:4px;}
-  .price-box .now .cur{font-size:16px;font-weight:700;color:var(--accent);}
-  .price-box .now .val{font-size:34px;font-weight:800;letter-spacing:-0.02em;color:var(--text-primary);}
   .hero-ctas{display:flex;flex-direction:column;gap:14px;margin-bottom:8px;max-width:460px;}
   .hero-ctas .btn{width:100%;}
   .hero-note{font-size:12px;color:var(--text-muted);text-align:center;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;}
@@ -164,7 +125,6 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
 
   /* ===== Real product screenshots ===== */
   .hero-mock{position:relative;width:100%;min-width:0;}
-  .hero-mockup-img{display:block;width:122%;max-width:122%;height:auto;}
   .shot{border-radius:14px;overflow:hidden;}
   .shot-bar{height:32px;display:flex;align-items:center;gap:6px;padding:0 14px;background:#12161C;border-bottom:1px solid rgba(255,255,255,0.06);}
   .shot-bar span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.18);display:block;}
@@ -321,34 +281,15 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   @media (max-width:960px){
     .hero-grid{grid-template-columns:1fr;gap:44px;}
     .hero-mock{max-width:420px;margin:0 auto;order:-1;}
-    .hero-mockup-img{width:100%;max-width:100%;}
     .c-4,.c-3,.c-2{grid-column:span 6;}
     .tour-item{grid-template-columns:1fr;gap:28px;margin-bottom:56px;}
     .tour-item.rev .tour-text{order:1;}
     .tour-item.rev .shot{order:2;}
     section{padding:60px 0;}
   }
-  @media (max-width:520px){
-    .price-box{flex-direction:column;align-items:flex-start;gap:6px;}
-    .top-banner{font-size:11.5px;}
-    .top-banner .sep{display:block;margin:2px 0 0;}
-  }
 </style>
 </head>
 <body>
-
-<div class="top-banner">
-  <b>OFERTA ESPECIAL PARA ESCRITÓRIOS DE ADVOCACIA</b><span class="sep">|</span>Desconto exclusivo por tempo limitado
-</div>
-
-<div class="topbar">
-  <div class="topbar-inner">
-    <div class="logo">
-      <div class="logo-mark">📊</div>
-      <span>Planilha <em>DRE</em> Jurídico</span>
-    </div>
-  </div>
-</div>
 
 <section class="hero relative">
   <div class="glow g1"></div>
@@ -360,19 +301,17 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
         <h1>Descubra Exatamente Qual Área da Advocacia <span class="grad">Paga Suas Contas</span> e Qual Está Consumindo Sua Margem</h1>
         <p class="hero-sub">Organize a gestão financeira do seu escritório jurídico, controle honorários, custas e tenha um DRE com EBITDA automático — sem depender de softwares caros ou planilhas complexas.</p>
 
-        <div class="price-box glass">
-          <span class="old">De R$ 197,00</span>
-          <div class="now"><span class="cur">R$</span><span class="val">17,90</span></div>
-        </div>
-
         <div class="hero-ctas">
-          <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-lime btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
+          <a href="#oferta-final" class="btn btn-lime btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
           <div class="hero-note">Acesso Imediato <span class="sep">•</span> <strong>Pagamento Único</strong> <span class="sep">•</span> <strong>Sem Mensalidades</strong></div>
         </div>
       </div>
 
       <div class="hero-mock">
-        <img class="hero-mockup-img" src="hero-macbook-mockup.webp" alt="Mockup de um MacBook exibindo o Dashboard da planilha, com Receita Líquida, EBITDA, Margem Líquida e representatividade dos centros de custo" loading="eager">
+        <div class="shot glass-strong">
+          <div class="shot-bar"><span></span><span></span><span></span><span class="tab">Dashboard — Indicadores Estratégicos</span></div>
+          <img src="dashboard.webp" alt="Print real do Dashboard da planilha, com Receita Líquida, EBITDA, Margem Líquida e representatividade dos centros de custo" loading="eager">
+        </div>
       </div>
     </div>
   </div>
