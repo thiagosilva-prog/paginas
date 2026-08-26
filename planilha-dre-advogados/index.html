@@ -102,7 +102,7 @@
   .shot{border-radius:14px;overflow:hidden;}
   .shot-bar{height:32px;display:flex;align-items:center;gap:6px;padding:0 14px;background:#12161C;border-bottom:1px solid rgba(255,255,255,0.06);}
   .shot-bar span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.18);display:block;}
-  .shot-bar .tab{margin-left:8px;font-size:10.5px;color:rgba(255,255,255,0.5);letter-spacing:.02em;}
+  .shot-bar .tab{margin-left:8px;font-size:10.5px;color:rgba(255,255,255,0.85);letter-spacing:.02em;}
   .shot img{display:block;width:100%;height:auto;}
 
   /* ===== Sections ===== */
@@ -202,11 +202,22 @@
   .stack-price-val{font-size:44px;font-weight:800;letter-spacing:-0.02em;color:var(--accent);}
   .stack-price-note{font-size:12.5px;color:var(--text-muted);margin-bottom:26px;}
   .stack-card .btn{width:100%;max-width:420px;margin:0 auto 14px;}
-  .btn-pulse{animation:btn-pulse 2s infinite;}
-  @keyframes btn-pulse{
-    0%{box-shadow:0 0 0 0 rgba(14,114,104,0.5);}
-    70%{box-shadow:0 0 0 16px rgba(14,114,104,0);}
-    100%{box-shadow:0 0 0 0 rgba(14,114,104,0);}
+  .btn-pulse{position:relative;}
+  .btn-pulse::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:inherit;
+    box-shadow:0 0 0 2px rgba(14,114,104,0.5);
+    opacity:0.7;
+    animation:btn-pulse-ring 2s infinite;
+    pointer-events:none;
+    will-change:transform,opacity;
+  }
+  @keyframes btn-pulse-ring{
+    0%{transform:scale(1);opacity:0.7;}
+    70%{transform:scale(1.12);opacity:0;}
+    100%{transform:scale(1.12);opacity:0;}
   }
   .stack-card .hero-note{margin-bottom:18px;}
   .stack-card .trust-row{color:var(--text-muted);}
@@ -261,26 +272,30 @@
   }
 </style>
 <script>
+function initTracking(){
     (function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
         t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
         y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
     })(window, document, "clarity", "script", "y83qyir986");
+
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1012574030959726');
+    fbq('track', 'PageView');
+}
+if ('requestIdleCallback' in window) {
+    requestIdleCallback(initTracking, { timeout: 3000 });
+} else {
+    window.addEventListener('load', initTracking);
+}
 </script>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '1012574030959726');
-fbq('track', 'PageView');
-</script>
-<!-- End Meta Pixel Code -->
 </head>
 <body>
 <noscript><img height="1" width="1" style="display:none"
@@ -288,6 +303,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
 alt=""
 /></noscript>
 
+<main>
 <section class="hero relative">
   <div class="glow g1"></div>
   <div class="glow g2"></div>
@@ -547,6 +563,7 @@ alt=""
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="container">
