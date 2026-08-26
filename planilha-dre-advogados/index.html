@@ -163,7 +163,8 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   .hero-note strong{color:var(--text-secondary);font-weight:600;}
 
   /* ===== Real product screenshots ===== */
-  .hero-mock{position:relative;}
+  .hero-mock{position:relative;width:100%;min-width:0;}
+  .hero-mockup-img{display:block;width:122%;max-width:122%;height:auto;}
   .shot{border-radius:14px;overflow:hidden;}
   .shot-bar{height:32px;display:flex;align-items:center;gap:6px;padding:0 14px;background:#12161C;border-bottom:1px solid rgba(255,255,255,0.06);}
   .shot-bar span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.18);display:block;}
@@ -319,7 +320,8 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
   /* ===== Responsive ===== */
   @media (max-width:960px){
     .hero-grid{grid-template-columns:1fr;gap:44px;}
-    .hero-mock{max-width:420px;margin:0 auto;}
+    .hero-mock{max-width:420px;margin:0 auto;order:-1;}
+    .hero-mockup-img{width:100%;max-width:100%;}
     .c-4,.c-3,.c-2{grid-column:span 6;}
     .tour-item{grid-template-columns:1fr;gap:28px;margin-bottom:56px;}
     .tour-item.rev .tour-text{order:1;}
@@ -345,7 +347,6 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       <div class="logo-mark">📊</div>
       <span>Planilha <em>DRE</em> Jurídico</span>
     </div>
-    <a href="#oferta-final" class="btn btn-lime">Quero a planilha</a>
   </div>
 </div>
 
@@ -371,10 +372,7 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
       </div>
 
       <div class="hero-mock">
-        <div class="shot glass-strong">
-          <div class="shot-bar"><span></span><span></span><span></span><span class="tab">Dashboard — Indicadores Estratégicos</span></div>
-          <img src="dashboard.webp" alt="Print real do Dashboard da planilha, com Receita Líquida, EBITDA, Margem Líquida e representatividade dos centros de custo" loading="eager">
-        </div>
+        <img class="hero-mockup-img" src="hero-macbook-mockup.webp" alt="Mockup de um MacBook exibindo o Dashboard da planilha, com Receita Líquida, EBITDA, Margem Líquida e representatividade dos centros de custo" loading="eager">
       </div>
     </div>
   </div>
