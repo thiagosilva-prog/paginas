@@ -96,6 +96,11 @@
   /* ===== Real product screenshots ===== */
   .hero-mock{position:relative;width:100%;max-width:640px;min-width:0;margin-bottom:32px;}
   .shot{border-radius:14px;overflow:hidden;}
+  .shot-portrait{max-width:300px;margin:0 auto;}
+  .bonus-shot{margin-bottom:36px;}
+  .stack-list.bonus-list{max-width:620px;gap:18px;}
+  .stack-list.bonus-list li{font-size:17px;gap:12px;}
+  .stack-list.bonus-list .check{width:24px;height:24px;font-size:13px;}
   .shot-bar{height:32px;display:flex;align-items:center;gap:6px;padding:0 14px;background:#12161C;border-bottom:1px solid rgba(255,255,255,0.06);}
   .shot-bar span{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.18);display:block;}
   .shot-bar .tab{margin-left:8px;font-size:10.5px;color:rgba(255,255,255,0.85);letter-spacing:.02em;}
@@ -275,9 +280,12 @@
     .stack-banner{margin:-18px -18px 12px;padding:7px 12px;font-size:11px;}
     .stack-badge{padding:4px 10px;font-size:9.5px;margin-bottom:7px;}
     .stack-card h3{font-size:15px;margin-bottom:8px;}
-    .stack-list{gap:4px;margin:0 auto 10px;}
-    .stack-list li{font-size:11.5px;gap:7px;}
-    .stack-list .check{width:15px;height:15px;font-size:9px;}
+    .stack-card .stack-list{gap:4px;margin:0 auto 10px;}
+    .stack-card .stack-list li{font-size:11.5px;gap:7px;}
+    .stack-card .stack-list .check{width:15px;height:15px;font-size:9px;}
+    .stack-list.bonus-list{gap:12px;}
+    .stack-list.bonus-list li{font-size:14px;}
+    .stack-list.bonus-list .check{width:20px;height:20px;font-size:11px;}
     .discount-badge{font-size:15px;padding:6px 14px;margin-bottom:6px;}
     .stack-price-row .old{font-size:12px;}
     .stack-price-label{font-size:10px;margin:4px 0 2px;}
@@ -510,6 +518,27 @@ alt=""
         <span>🔒 Privacidade protegida</span>
       </div>
     </div>
+  </div>
+</section>
+
+<section id="bonus">
+  <div class="container z1">
+    <div class="section-head center">
+      <div class="eyebrow"><span class="dot"></span> Bônus Exclusivo</div>
+      <h2>Bônus: Aulas em Vídeo Direto na Sua Área de Membros</h2>
+      <p class="section-sub center">3 aulas curtas com os conceitos financeiros essenciais e o passo a passo de configuração da planilha — para você começar a usar sem travar em nenhuma etapa.</p>
+    </div>
+
+    <div class="shot glass shot-portrait bonus-shot">
+      <div class="shot-bar"><span></span><span></span><span></span><span class="tab">Área de Membros</span></div>
+      <img src="area-de-membros.webp" alt="Print real da área de membros com as 3 aulas bônus: Boas-vindas, Módulo 01 e Módulo 02" width="606" height="755" loading="lazy" decoding="async">
+    </div>
+
+    <ul class="stack-list bonus-list">
+      <li><span class="check">✓</span> <span><strong>Boas-vindas</strong> (1 min): como aproveitar a área de membros e a planilha ao máximo.</span></li>
+      <li><span class="check">✓</span> <span><strong>Módulo 01</strong> (18 min): os conceitos financeiros essenciais por trás do DRE e do EBITDA.</span></li>
+      <li><span class="check">✓</span> <span><strong>Módulo 02</strong> (2 min): passo a passo de configuração da sua planilha, do zero.</span></li>
+    </ul>
   </div>
 </section>
 
