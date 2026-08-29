@@ -73,7 +73,12 @@
   .btn-lg{padding:16px 30px;font-size:15px;border-radius:12px;}
 
   /* ===== Hero ===== */
-  .hero{position:relative;padding:88px 0 80px;overflow:visible;}
+  .top-banner{
+    background:var(--danger);color:#fff;text-align:center;
+    padding:16px 16px;font-size:16px;font-weight:700;letter-spacing:.01em;
+    position:relative;z-index:110;
+  }
+  .hero{position:relative;padding:64px 0 80px;overflow:visible;}
   .hero .glow.g1{width:520px;height:420px;top:-160px;right:-80px;background:radial-gradient(circle, rgba(14,114,104,0.10) 0%, rgba(14,114,104,0) 70%);}
   .hero .glow.g2{width:420px;height:380px;top:60px;left:-160px;background:radial-gradient(circle, rgba(14,114,104,0.06) 0%, rgba(14,114,104,0) 70%);}
   .hero-stack{max-width:720px;margin:0 auto;display:flex;flex-direction:column;align-items:center;text-align:center;}
@@ -246,21 +251,6 @@
   .faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
   .faq-a-inner{padding:0 22px 20px;font-size:13.5px;color:var(--text-secondary);}
 
-  /* ===== Final CTA ===== */
-  .cta-final{
-    position:relative;text-align:center;border-radius:20px;padding:64px 32px;overflow:hidden;
-    background:linear-gradient(165deg,#0E7268,#0B5A52);
-    border:1px solid rgba(255,255,255,0.16);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,0.14), 0 30px 60px -28px rgba(14,114,104,0.5);
-  }
-  .cta-final .glow{width:420px;height:280px;top:-140px;left:50%;transform:translateX(-50%);background:radial-gradient(circle, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0) 70%);}
-  .cta-final .eyebrow{background:rgba(255,255,255,0.18);border-color:rgba(255,255,255,0.28);color:#fff;}
-  .cta-final h2{margin-bottom:14px;color:#fff;}
-  .cta-final p{color:rgba(255,255,255,0.85);max-width:520px;margin:0 auto 30px;}
-  .cta-final .hero-ctas{margin:0 auto 8px;}
-  .cta-final .hero-note{color:rgba(255,255,255,0.7);}
-  .cta-final .hero-note strong{color:#fff;}
-
   /* ===== Footer ===== */
   footer{border-top:1px solid var(--border-default);padding:32px 0;margin-top:40px;}
   .footer-inner{display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap;text-align:center;}
@@ -276,6 +266,7 @@
     section{padding:60px 0;}
   }
   @media (max-width:480px){
+    .top-banner{font-size:13px;padding:14px 10px;white-space:nowrap;}
     .stack-card{padding:18px 18px;}
     .stack-banner{margin:-18px -18px 12px;padding:7px 12px;font-size:11px;}
     .stack-badge{padding:4px 10px;font-size:9.5px;margin-bottom:7px;}
@@ -329,6 +320,8 @@ src="https://www.facebook.com/tr?id=1012574030959726&ev=PageView&noscript=1"
 alt=""
 /></noscript>
 
+<div class="top-banner">⚡ Oferta de Lançamento · De R$ 197,00 por R$ 17,90</div>
+
 <main>
 <section class="hero relative">
   <div class="glow g1"></div>
@@ -347,7 +340,7 @@ alt=""
       </div>
 
       <div class="hero-ctas">
-        <a href="#oferta-final" class="btn btn-lime btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
+        <a href="#oferta-final" class="btn btn-lime btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO POR R$17,90 →</a>
         <div class="hero-note">Acesso Imediato <span class="sep">•</span> <strong>Pagamento Único</strong> <span class="sep">•</span> <strong>Sem Mensalidades</strong></div>
       </div>
     </div>
@@ -500,6 +493,7 @@ alt=""
         <li><span class="check">✓</span> Dashboard estratégico com ROI por especialidade jurídica</li>
         <li><span class="check">✓</span> Separação clara entre despesas pessoais e do escritório</li>
         <li><span class="check">✓</span> Acesso imediato, pagamento único e sem mensalidade</li>
+        <li><span class="check">✓</span> Bônus: 3 aulas em vídeo (conceitos financeiros e configuração)</li>
       </ul>
 
       <div class="stack-price-row">
@@ -510,7 +504,7 @@ alt=""
         <div class="stack-price-val">R$ 17,90</div>
         <div class="stack-price-note">Pagamento único</div>
       </div>
-      <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-lime btn-lg btn-pulse">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA →</a>
+      <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-lime btn-lg btn-pulse">QUERO ORGANIZAR MEU ESCRITÓRIO POR R$17,90 →</a>
       <div class="hero-note">🔒 Acesso imediato no e-mail</div>
       <div class="trust-row">
         <span>🏆 Satisfação garantida</span>
@@ -539,24 +533,6 @@ alt=""
       <li><span class="check">✓</span> <span><strong>Módulo 01</strong> (18 min): os conceitos financeiros essenciais por trás do DRE e do EBITDA.</span></li>
       <li><span class="check">✓</span> <span><strong>Módulo 02</strong> (2 min): passo a passo de configuração da sua planilha, do zero.</span></li>
     </ul>
-  </div>
-</section>
-
-<section>
-  <div class="container z1">
-    <div class="midcta">
-      <div class="glow"></div>
-      <div class="z1">
-        <h3>Chega de adivinhar onde seu escritório está ganhando (ou perdendo) dinheiro</h3>
-        <p>Por apenas <b style="color:#fff;">R$ 17,90</b>, pagamento único, você tem acesso imediato à planilha completa.</p>
-        <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-invert btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
-        <div class="trust-row">
-          <span>Compra 100% segura</span>
-          <span>Acesso imediato</span>
-          <span>Pix ou cartão</span>
-        </div>
-      </div>
-    </div>
   </div>
 </section>
 
@@ -595,15 +571,16 @@ alt=""
 
 <section>
   <div class="container z1">
-    <div class="cta-final">
+    <div class="midcta">
       <div class="glow"></div>
       <div class="z1">
-        <div class="eyebrow"><span class="dot"></span> Planilha de Gestão Financeira Jurídica</div>
-        <h2>Pronto para descobrir onde seu escritório realmente lucra?</h2>
-        <p>Organize honorários, custas e centros de custo — e tenha um DRE com EBITDA automático hoje mesmo.</p>
-        <div class="hero-ctas" style="max-width:420px;">
-          <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-invert btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO AGORA</a>
-          <div class="hero-note">Acesso Imediato <span class="sep">•</span> <strong>Pagamento Único</strong> <span class="sep">•</span> <strong>Sem Mensalidades</strong></div>
+        <h3>Chega de adivinhar onde seu escritório está ganhando (ou perdendo) dinheiro</h3>
+        <p>Por apenas <b style="color:#fff;">R$ 17,90</b>, pagamento único, você tem acesso imediato à planilha completa.</p>
+        <a href="https://lastlink.com/p/CA63EFF66/checkout-payment/" class="btn btn-invert btn-lg">QUERO ORGANIZAR MEU ESCRITÓRIO POR R$17,90 →</a>
+        <div class="trust-row">
+          <span>Compra 100% segura</span>
+          <span>Acesso imediato</span>
+          <span>Pix ou cartão</span>
         </div>
       </div>
     </div>
