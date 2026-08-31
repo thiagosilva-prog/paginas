@@ -196,13 +196,16 @@
     color:var(--accent-dim);border-radius:var(--radius-pill);padding:6px 14px;font-size:11px;font-weight:700;
     text-transform:uppercase;letter-spacing:0.06em;margin-bottom:18px;
   }
-  .stack-card h3{font-size:19px;font-weight:800;letter-spacing:-0.01em;margin-bottom:22px;}
+  .stack-card h3{font-size:19px;font-weight:800;letter-spacing:-0.01em;margin-bottom:14px;}
   .stack-list{list-style:none;display:flex;flex-direction:column;gap:11px;margin:0 auto 26px;max-width:460px;text-align:left;}
+  .stack-card .stack-list{gap:7px;margin:0 auto 20px;}
   .stack-list li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:var(--text-secondary);}
   .stack-list .check{
     flex-shrink:0;width:19px;height:19px;border-radius:50%;background:var(--accent);color:#fff;
     display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:1px;
   }
+  .stack-list .check.gift{background:none;width:auto;height:auto;font-size:13px;margin-top:0;}
+  .stack-list .bonus-item{font-weight:700;color:var(--text-primary);}
   .stack-banner{
     background:var(--danger);color:#fff;text-align:center;
     margin:-40px -40px 26px;padding:14px 16px;font-size:14px;font-weight:800;
@@ -211,7 +214,7 @@
   .stack-price-row .old{font-size:14px;color:var(--text-muted);text-decoration:line-through;}
   .stack-price-label{font-size:12px;font-weight:700;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.08em;margin:10px 0 4px;}
   .stack-price-val{font-size:44px;font-weight:800;letter-spacing:-0.02em;color:var(--accent);}
-  .stack-price-note{font-size:12.5px;color:var(--text-muted);margin-bottom:26px;}
+  .stack-price-note{font-size:12.5px;color:var(--text-muted);margin-bottom:18px;}
   .stack-card .btn{width:100%;max-width:420px;margin:0 auto 14px;}
   .btn-pulse{position:relative;}
   .btn-pulse::after{
@@ -270,8 +273,8 @@
     .stack-card{padding:18px 18px;}
     .stack-banner{margin:-18px -18px 12px;padding:7px 12px;font-size:11px;}
     .stack-badge{padding:4px 10px;font-size:9.5px;margin-bottom:7px;}
-    .stack-card h3{font-size:15px;margin-bottom:8px;}
-    .stack-card .stack-list{gap:4px;margin:0 auto 10px;}
+    .stack-card h3{font-size:15px;margin-bottom:6px;}
+    .stack-card .stack-list{gap:2px;margin:0 auto 8px;}
     .stack-card .stack-list li{font-size:11.5px;gap:7px;}
     .stack-card .stack-list .check{width:15px;height:15px;font-size:9px;}
     .stack-list.bonus-list{gap:12px;}
@@ -281,7 +284,7 @@
     .stack-price-row .old{font-size:12px;}
     .stack-price-label{font-size:10px;margin:4px 0 2px;}
     .stack-price-val{font-size:34px;}
-    .stack-price-note{font-size:10.5px;margin-bottom:10px;}
+    .stack-price-note{font-size:10.5px;margin-bottom:8px;}
     .stack-card .btn-lg{padding:14px 22px;font-size:14px;}
     .stack-card .btn{margin:0 auto 6px;}
     .stack-card .hero-note{margin-bottom:6px;font-size:10.5px;}
@@ -493,7 +496,7 @@ alt=""
         <li><span class="check">✓</span> Dashboard estratégico com ROI por especialidade jurídica</li>
         <li><span class="check">✓</span> Separação clara entre despesas pessoais e do escritório</li>
         <li><span class="check">✓</span> Acesso imediato, pagamento único e sem mensalidade</li>
-        <li><span class="check">✓</span> Bônus: 3 aulas em vídeo (conceitos financeiros e configuração)</li>
+        <li class="bonus-item"><span class="check gift">🎁</span> <span><strong>Bônus:</strong><br>Curso Conceitos financeiros + Configuração da planilha</span></li>
       </ul>
 
       <div class="stack-price-row">
